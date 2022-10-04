@@ -19,7 +19,7 @@ There are several features that might be added
 
 ## User Stories
 
-- As a user, I want to be able to add my own timetable to the main page of the tool kit.
-- As a user, I want to be able to add sticky notes and write on it. 
-- As a user, I want to be able to add a task to my todo list, which also showing on the main page. 
-- As a user, I want to be able to see the time, weather, other information on the main page. 
+- As a user, I want to be able to add my own timetables to the tool kit. 
+- As a user, I want to be able to view my own timetables. 
+- As a user, I want to be able to add my own todo items with the deadline. 
+- As a user, I want to be able to view the todo items, and one thing if completed, I can take it off the todo list
