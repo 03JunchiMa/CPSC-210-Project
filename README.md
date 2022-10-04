@@ -2,7 +2,7 @@
 
 ## Project description
 
-This will be the course project for CPSC 210. This project will be focusing on developing an **intergrated desktop tool kit**, which allow you to see the time, your todo things, your customized timetable, weather etc. 
+This will be the course project for CPSC 210. This project will be focusing on developing an **intergrated desktop tool kit**.
 
 ## Target audience
 
@@ -10,16 +10,19 @@ The target audience will be the students, since most of the features will be rel
 
 ## What will this application do? 
 
-There are several features that might be added
+In the *main page*, you can view your own timetable, weather, date, time, etc.
 
-- You can **costomize your own timetable**, which will show up on the main page along with different features such as todo, weather, time, date etc.
-- You can add sticky notes
-- You can use add todo list, which will also show up on the main screen. 
-- Features that might be intergrated (customize your own main page)
+Aside from the main page, there are different **tools** you can use
+- add sticky notes
+- customize your own main page
+- allow you to see the time, your customized timetable, weather
+- add sticky notes,
+- manage your own personal blogs
+- use advanced calculator
 
 ## User Stories
 
 - As a user, I want to be able to add my own timetables to the tool kit. 
-- As a user, I want to be able to view my own timetables. 
-- As a user, I want to be able to add my own todo items with the deadline. 
-- As a user, I want to be able to view the todo items, and one thing if completed, I can take it off the todo list
+- As a user, I want to be able to view my own timetables.
+- As a user, I want to be able to do solve some math equations (such as system of linear equations)
+- As a user, I want to be able to add some personal blogs. 
