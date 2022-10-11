@@ -6,7 +6,6 @@ import model.ExpenseRecording;
 import model.TimeTable;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Scanner;
 
@@ -53,7 +52,6 @@ public class TreeApp {
 
 
     // EFFECTS: run the expenseRecording, user can use this to record the expense
-    @SuppressWarnings("methodlength")
     private void runExpenseRecording() {
         System.out.println("---------------ExpenseRecording User Interface-------------------------------------------");
         System.out.println("Please set a budget");
@@ -61,13 +59,7 @@ public class TreeApp {
         int budget = scan.nextInt();
 
         expenseRecording = new ExpenseRecording(budget);
-
-        System.out.println("If you want to exit and return back to the main page, enter 6 at anytime");
-        System.out.println("Please enter the corresponding number to indicate what you want to do:");
-        System.out.println("------------------------------");
-        System.out.println("1. add a new expense\n2. Delete an expense by id");
-        System.out.println("3. Undo the last add/delete operation\n4. View the expense");
-        System.out.println("5. queryExpenseById\n6.exit");
+        runExpenseRecordingGreeting();
 
         while (true) {
 
@@ -77,30 +69,45 @@ public class TreeApp {
                 System.out.println("Input number is not valid, please enter again");
                 number = scan.nextInt();
             }
-
             if (number == 6) {
                 System.out.println("---------------exit and return to the main page----------------------------------");
                 break;
             }
 
-            switch (number) {
-                case 1:
-                    addExpense();
-                    break;
-                case 2:
-                    deleteExpense();
-                    break;
-                case 3:
-                    undoExpenseOperation();
-                    break;
-                case 4:
-                    viewExpense();
-                    break;
-                case 5:
-                    queryExpenseById();
-                    break;
-            }
+            switchNumberInrunExpenseRecording(number);
+
             System.out.println("Returned back to the expense recording page");
+        }
+    }
+
+    // EFFECTS: say greetings in the runExpenseRecording page
+    public void runExpenseRecordingGreeting() {
+        System.out.println("If you want to exit and return back to the main page, enter 6 at anytime");
+        System.out.println("Please enter the corresponding number to indicate what you want to do:");
+        System.out.println("------------------------------");
+        System.out.println("1. add a new expense\n2. Delete an expense by id");
+        System.out.println("3. Undo the last add/delete operation\n4. View the expense");
+        System.out.println("5. queryExpenseById\n6.exit");
+    }
+
+    // EFFECTS: switch the number case and determine which method to execute in the runExpenseRecording page
+    public void switchNumberInrunExpenseRecording(int number) {
+        switch (number) {
+            case 1:
+                addExpense();
+                break;
+            case 2:
+                deleteExpense();
+                break;
+            case 3:
+                undoExpenseOperation();
+                break;
+            case 4:
+                viewExpense();
+                break;
+            case 5:
+                queryExpenseById();
+                break;
         }
     }
 
@@ -109,6 +116,8 @@ public class TreeApp {
     private void addExpense() {
         System.out.println("-----You're now adding the expense, please enter the expense in the following format-----");
         System.out.println("\"amount\" \"category\" (omit the quotation mark)");
+        System.out.println("If it's a expense, please put the negative amount");
+        System.out.println("If it is an income,please use positive amount, you can put any category for the income");
 
         int amount = scan.nextInt();
         while (amount == 0) {
@@ -152,14 +161,8 @@ public class TreeApp {
     }
 
     // EFFECTS: show the expense
-    @SuppressWarnings("methodlength")
     private void viewExpense() {
-        System.out.println("------------------------------You're now viewing the expense-----------------------------");
-        System.out.println("Please enter the corresponding number to indicate which ");
-        System.out.println("1. View the highest cost category");
-        System.out.println("2. View the ratio of the cost of categories (percentage)");
-        System.out.println("3. View all the expenses");
-        System.out.println("4. exit and go back");
+        viewExpenseGreeting();
 
         int number = scan.nextInt();
 
@@ -186,6 +189,16 @@ public class TreeApp {
 
     }
 
+    // EFFECTS: say greetings in the view expense
+    public void viewExpenseGreeting() {
+        System.out.println("------------------------------You're now viewing the expense-----------------------------");
+        System.out.println("Please enter the corresponding number to indicate which ");
+        System.out.println("1. View the highest cost category");
+        System.out.println("2. View the ratio of the cost of categories (percentage)");
+        System.out.println("3. View all the expenses");
+        System.out.println("4. exit and go back");
+    }
+
     // EFFECTS: query the expense by id
     private void queryExpenseById() {
         System.out.println("-------------------------------Query expense info by id Page-----------------------------");
@@ -203,15 +216,9 @@ public class TreeApp {
         }
     }
 
-    @SuppressWarnings("methodlength")
     // EFFECTS: run the timetable, user can use this to add and delete intended course
     private void runTimeTable() {
-        System.out.println("---------------TimeTable User Interface-------------------------------------------");
-        System.out.println("Please enter the corresponding number to indicate what you want to do:");
-        System.out.println("1. Add a new course");
-        System.out.println("2. Delete a course");
-        System.out.println("3. View the timetable");
-        System.out.println("4. Exit");
+        timeTableGreeting();
 
         timeTable = new TimeTable();
 
@@ -231,14 +238,20 @@ public class TreeApp {
             } else {
                 viewTimeTable();
             }
-            System.out.println("---------------TimeTable User Interface-------------------------------------------");
-            System.out.println("Please enter the corresponding number to indicate what you want to do:");
-            System.out.println("1. Add a new course");
-            System.out.println("2. Delete a course");
-            System.out.println("3. View the timetable");
-            System.out.println("4. Exit");
+
+            timeTableGreeting();
+
             number = scan.nextInt();
         }
+    }
+
+    public void timeTableGreeting() {
+        System.out.println("---------------TimeTable User Interface-------------------------------------------");
+        System.out.println("Please enter the corresponding number to indicate what you want to do:");
+        System.out.println("1. Add a new course");
+        System.out.println("2. Delete a course");
+        System.out.println("3. View the timetable");
+        System.out.println("4. Exit");
     }
 
     // MODIFIES: this
@@ -305,7 +318,6 @@ public class TreeApp {
         }
     }
 
-    @SuppressWarnings("methodlength")
     // EFFECTS: view the timetable
     private void viewTimeTable() {
 
@@ -319,19 +331,7 @@ public class TreeApp {
                 System.out.println("------" + weekday + "------");
 
                 ArrayList<String> courseByDay = new ArrayList<>();
-                for (int j = 0; j < courseList.size(); j++) {
-                    Course course = courseList.get(j);
-                    int day = course.getWeekday();
-
-                    while (day > 0) {
-                        int singleDay = day % 10;
-                        day /= 10;
-                        if (singleDay == i) {
-                            courseByDay.add(course.getStartTime() + "~"
-                                    + course.getEndTime() + ": " + course.getCourseNameSection());
-                        }
-                    }
-                }
+                courseByDayArrange(courseList, i, courseByDay);
                 Collections.sort(courseByDay);
 
                 for (String s : courseByDay) {
@@ -342,7 +342,23 @@ public class TreeApp {
         }
         System.out.println("back to the main page");
 
+    }
 
+    // EFFECTS: arrange the course from day to day
+    private static void courseByDayArrange(ArrayList<Course> courseList, int i, ArrayList<String> courseByDay) {
+        for (int j = 0; j < courseList.size(); j++) {
+            Course course = courseList.get(j);
+            int day = course.getWeekday();
+
+            while (day > 0) {
+                int singleDay = day % 10;
+                day /= 10;
+                if (singleDay == i) {
+                    courseByDay.add(course.getStartTime() + "~"
+                            + course.getEndTime() + ": " + course.getCourseNameSection());
+                }
+            }
+        }
     }
 
     // EFFECTS: return the string representation of the weekday
@@ -359,7 +375,5 @@ public class TreeApp {
             return "Friday";
         }
     }
-
-
 
 }

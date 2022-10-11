@@ -24,6 +24,9 @@ try to interact with different things and see how the tree grows.
 ## User Stories
 
 - As a user, I want to be able to record my living expense (add my living expense to a category, and delete the expense, those operations should be done fast).
-- As a user, I want to be able to view and query my living expense in different forms (the highest living expense, percentage etc, the query operation should be done fast).
+- As a user, I want to be able to view my living expense in different forms (the highest living expense, percentage etc, the query operation should be done fast).
+- As a user, I want to query the specific living expense. 
 - As a user, I want to be able to undo the last operation that I did in modifying the living expense.
-- As a user, I want to be able to add and delete the course to the timetable, and view the timetable. 
+- As a user, I want to be able to add the course to the timetable
+- As a user, I want to delete the course in the timetable
+- As a user, I want to view the timetable
