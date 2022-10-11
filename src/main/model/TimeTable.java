@@ -3,12 +3,12 @@ package model;
 import java.util.ArrayList;
 
 // generate all the possible timetables based on the user input
-public class TimeTableGenerator {
+public class TimeTable {
 
     private ArrayList<Course> timetable;
 
     // EFFECT: start with a new timetable generator
-    public TimeTableGenerator() {
+    public TimeTable() {
         timetable = new ArrayList<>();
     }
 

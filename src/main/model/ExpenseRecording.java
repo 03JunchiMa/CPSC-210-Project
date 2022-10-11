@@ -11,7 +11,7 @@ public class ExpenseRecording {
     private ArrayList<Integer> expenseIdList;
     private Map<String,Integer> categoryCost;
     private Map<Integer,Expense> idQueryExpense;
-    private Operation last;
+    private Operation lastOperation;
     private int idCounter = 1;
 
     // EFFECTS: create a new living expense recording and new budget in cents (for one month);
@@ -34,11 +34,12 @@ public class ExpenseRecording {
     // for the income you can set any category, the program only record the income to the category "income"
     // If the category of the expense is present, the expense will be added to the category.
     // If the category is not present, the recording will open a new category and add the information to it.
-    //  update the last operation (record the last id)
+    //  update the lastOperation operation (record the lastOperation id)
     public void addExpenseInfo(Expense expense) {
 
-        if (last != null && last.getExpense() != null && last.getExpense().getId() == expense.getId()) {
-            expense.setId(last.getExpense().getId());
+        if (lastOperation != null && lastOperation.getExpense() != null
+                && lastOperation.getExpense().getId() == expense.getId()) {
+            expense.setId(lastOperation.getExpense().getId());
         } else {
             expense.setId(idCounter++);
         }
@@ -58,23 +59,7 @@ public class ExpenseRecording {
         } else {
             categoryCost.put(expense.getCategory(), expense.getAmount());
         }
-        last = new Operation("addExpenseInfo",expense);
-    }
-
-    // MODIFIES: this
-    // EFFECTS: binary search the id information, return the index of corresponding id in the list
-    public int binarySearchIdPlace(int id, int left, int right) {
-
-        while (left < right) {
-            int mid = (left + right + 1) >> 1;
-            if (expenseIdList.get(mid) <= id) {
-                left = mid;
-            } else {
-                right = mid - 1;
-            }
-        }
-
-        return left;
+        lastOperation = new Operation("addExpenseInfo",expense);
     }
 
     // MODIFIES: this
@@ -102,33 +87,51 @@ public class ExpenseRecording {
             }
             idQueryExpense.remove(id);
             expenseIdList.remove(position);
-            last = new Operation("deleteExpenseInfo",expense);
+            lastOperation = new Operation("deleteExpenseInfo",expense);
             return true;
         } else {
-            last = new Operation("undoTheLastOperation",null);
+            lastOperation = new Operation("undoTheLastOperation",null);
             return false;
         }
     }
 
     // MODIFIES: this
-    // EFFECTS: undo the very last adding or delete operation. Update the recorded number for budget, cost, or income
-    // also update each category, after the undo operation, the last operation will be updated to the undo operation
+    // EFFECTS: undo the very lastOperation adding or delete operation.
+    // Update the recorded number for budget, cost, or income
+    // also update each category,
+    // after the undo operation, the lastOperation operation will be updated to the undo operation
     // if the operation is undoTheLastOperation, then return false
     // otherwise undo the corresponding operation and return true.
     public boolean undoTheLastOperation() {
 
-        if (last.getOperationName().equals("deleteExpenseInfo")) {
-            addExpenseInfo(last.getExpense());
-            last = new Operation("undoTheLastOperation",null);
+        if (lastOperation.getOperationName().equals("deleteExpenseInfo")) {
+            addExpenseInfo(lastOperation.getExpense());
+            lastOperation = new Operation("undoTheLastOperation",null);
             return true;
-        } else if (last.getOperationName().equals("addExpenseInfo")) {
-            deleteExpenseInfo(last.getExpense().getId());
-            last = new Operation("undoTheLastOperation",null);
+        } else if (lastOperation.getOperationName().equals("addExpenseInfo")) {
+            deleteExpenseInfo(lastOperation.getExpense().getId());
+            lastOperation = new Operation("undoTheLastOperation",null);
             return true;
         } else {
             return false;
         }
 
+    }
+
+    // MODIFIES: this
+    // EFFECTS: binary search the id information, return the index of corresponding id in the list
+    public int binarySearchIdPlace(int id, int left, int right) {
+
+        while (left < right) {
+            int mid = (left + right + 1) >> 1;
+            if (expenseIdList.get(mid) <= id) {
+                left = mid;
+            } else {
+                right = mid - 1;
+            }
+        }
+
+        return left;
     }
 
     // EFFECTS: return the highest cost category, if no expense info is present, return empty string
@@ -224,9 +227,9 @@ public class ExpenseRecording {
         return idQueryExpense.get(id);
     }
 
-    // EFFECTS: return the last operation
+    // EFFECTS: return the lastOperation operation
     public Operation getLastOperation() {
-        return last;
+        return lastOperation;
     }
 
     // EFFECTS: return a string with the representation of information of living expense in a compact form.
