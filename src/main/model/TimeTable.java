@@ -39,6 +39,7 @@ public class TimeTable {
         }
     }
 
+
     // EFFECTS: return true if a course is being added, return false otherwise
     public boolean containsCourse(Course course) {
         return timetable.contains(course);
@@ -48,4 +49,32 @@ public class TimeTable {
     public int getTotalCourse() {
         return timetable.size();
     }
+
+    // EFFECTS: return the timetable
+    public ArrayList<Course> getTimetable() {
+        return this.timetable;
+    }
+
+    // EFFECTS: compare two timetable, return true if they are equals (two timetables have the same course element)
+    // return false otherwise, this method is used for testing the getTimeTable method
+    public boolean compareToCurrentTimeTable(ArrayList<Course> timetable) {
+        if (getTimetable().size() != timetable.size()) {
+            return false;
+        }
+
+        for (int i = 0; i < getTimetable().size(); i++) {
+            boolean check = false;
+            for (int j = 0; j < timetable.size(); j++) {
+                if (getTimetable().get(i).toString().equals(timetable.get(j).toString())) {
+                    check = true;
+                }
+            }
+            if (!check) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }

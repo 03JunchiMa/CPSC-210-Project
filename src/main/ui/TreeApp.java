@@ -1,13 +1,19 @@
 package ui;
 
+import model.Course;
 import model.Expense;
 import model.ExpenseRecording;
+import model.TimeTable;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Scanner;
 
 // TreeApp application
 public class TreeApp {
 
+    TimeTable timeTable;
     ExpenseRecording expenseRecording;
     private Scanner scan;
 
@@ -49,7 +55,7 @@ public class TreeApp {
     // EFFECTS: run the expenseRecording, user can use this to record the expense
     @SuppressWarnings("methodlength")
     private void runExpenseRecording() {
-        System.out.println("---------------ExpenseRecording user interface-------------------------------------------");
+        System.out.println("---------------ExpenseRecording User Interface-------------------------------------------");
         System.out.println("Please set a budget");
 
         int budget = scan.nextInt();
@@ -198,8 +204,136 @@ public class TreeApp {
 
     // EFFECTS: run the timetable, user can use this to add and delete intended course
     private void runTimeTable() {
+        System.out.println("---------------TimeTable User Interface-------------------------------------------");
+        System.out.println("Please enter the corresponding number to indicate what you want to do:");
+        System.out.println("1. Add a new course");
+        System.out.println("2. Delete a course");
+        System.out.println("3. View the timetable");
+        System.out.println("4. Exit");
 
+        int number = scan.nextInt();
+
+        while (!(number >= 1 && number <= 4)) {
+            System.out.println("The input is not valid, please enter again");
+            number = scan.nextInt();
+        }
+
+        while (number != 4) {
+            if (number == 1) {
+                addCourse();
+            } else if (number == 2) {
+                deleteCourse();
+            } else {
+                viewTimeTable();
+            }
+        }
     }
 
+    // MODIFIES: this
+    // EFFECTS: add a new course to timetable
+    private void addCourse() {
+        System.out.println("---------------You are now adding the course---------------------------------------------");
+        System.out.println("please enter the course in the following format:");
+        System.out.println("\"CourseName \" \"section number\" \"startTime\" \"endTime\" \"weekday\"");
+        System.out.println("Note for the startTime, you should use 24-hours clock, and omit the semicolon");
+        System.out.println("This means 17:00 should be entered as 1700");
+        System.out.println("Note the for weekday, if you have this class on Monday, Tuesday and Wednesday, enter 123");
+
+        String courseName = "";
+
+        courseName += scan.next() + " ";
+        courseName += scan.next() + " ";
+        courseName += scan.next();
+
+        int startTime;
+        int endTime;
+        int weekday;
+        startTime = scan.nextInt();
+        endTime = scan.nextInt();
+        weekday = scan.nextInt();
+
+        Course course = new Course(courseName,startTime,endTime,weekday);
+        boolean checkAddCourse = timeTable.addIntendedCourse(course);
+        if (checkAddCourse) {
+            System.out.println("Course has been added successfully");
+        } else {
+            System.out.println("The course has already exit in the timetable, please check again");
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: delete a course
+    private void deleteCourse() {
+        System.out.println("-----------------------------------You are now deleting the course-----------------------");
+        System.out.println("please enter the course in the following format:");
+        System.out.println("\"CourseName \" \"section number\" \"startTime\" \"endTime\" \"weekday\"");
+        System.out.println("Note for the startTime, you should use 24-hours clock, and omit the semicolon");
+        System.out.println("This means 17:00 should be entered as 1700");
+        System.out.println("Note the for weekday, if you have this class on Monday, Tuesday and Wednesday, enter 123");
+
+        String courseName = "";
+
+        courseName += scan.next() + " ";
+        courseName += scan.next() + " ";
+        courseName += scan.next();
+
+        int startTime;
+        int endTime;
+        int weekday;
+        startTime = scan.nextInt();
+        endTime = scan.nextInt();
+        weekday = scan.nextInt();
+
+        Course course = new Course(courseName,startTime,endTime,weekday);
+        boolean checkDeleteCourse = timeTable.deleteIntendedCourse(course);
+        if (checkDeleteCourse) {
+            System.out.println("Course has been deleted successfully");
+        } else {
+            System.out.println("The system did not find the corresponding course, please check again");
+        }
+    }
+
+    // EFFECTS: view the timetable
+    private void viewTimeTable() {
+        System.out.println("--------------------------You are currently viewing the timetable------------------------");
+        ArrayList<Course> courseList = timeTable.getTimetable();
+        for (int i = 1; i <= 5; i++) {
+            String weekday = intToWeekday(i);
+            System.out.println("------" + weekday + "------");
+
+            ArrayList<String> courseByDay = new ArrayList<>();
+            for (int j = 0; j < courseList.size(); j++) {
+                Course course = courseList.get(j);
+                int day = course.getWeekday();
+
+                while (day > 0) {
+                    int singleDay = day % 10;
+                    day /= 10;
+                    if (singleDay == i) {
+                        courseByDay.add(course.getStartTime() + "~" + course.getEndTime());
+                    }
+                }
+            }
+            Collections.sort(courseByDay);
+
+            for (String s : courseByDay) {
+                System.out.println(s);
+            }
+        }
+    }
+
+    private String intToWeekday(int number) {
+        if (number == 1) {
+            return "Monday";
+        } else if (number == 2) {
+            return "Tuesday";
+        } else if (number == 3) {
+            return "Wednesday";
+        } else if (number == 4) {
+            return "Thursday";
+        } else {
+            return "Friday";
+        }
+    }
 
 }
