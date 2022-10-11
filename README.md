@@ -1,4 +1,4 @@
-# My Personal Project - Tree App
+# My Personal Project - Tree Application
 
 ## Project description
 
