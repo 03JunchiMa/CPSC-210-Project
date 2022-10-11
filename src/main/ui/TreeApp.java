@@ -100,6 +100,7 @@ public class TreeApp {
                     queryExpenseById();
                     break;
             }
+            System.out.println("Returned back to the expense recording page");
         }
     }
 
@@ -202,6 +203,7 @@ public class TreeApp {
         }
     }
 
+    @SuppressWarnings("methodlength")
     // EFFECTS: run the timetable, user can use this to add and delete intended course
     private void runTimeTable() {
         System.out.println("---------------TimeTable User Interface-------------------------------------------");
@@ -211,6 +213,8 @@ public class TreeApp {
         System.out.println("3. View the timetable");
         System.out.println("4. Exit");
 
+        timeTable = new TimeTable();
+
         int number = scan.nextInt();
 
         while (!(number >= 1 && number <= 4)) {
@@ -219,6 +223,7 @@ public class TreeApp {
         }
 
         while (number != 4) {
+
             if (number == 1) {
                 addCourse();
             } else if (number == 2) {
@@ -226,6 +231,13 @@ public class TreeApp {
             } else {
                 viewTimeTable();
             }
+            System.out.println("---------------TimeTable User Interface-------------------------------------------");
+            System.out.println("Please enter the corresponding number to indicate what you want to do:");
+            System.out.println("1. Add a new course");
+            System.out.println("2. Delete a course");
+            System.out.println("3. View the timetable");
+            System.out.println("4. Exit");
+            number = scan.nextInt();
         }
     }
 
@@ -293,35 +305,47 @@ public class TreeApp {
         }
     }
 
+    @SuppressWarnings("methodlength")
     // EFFECTS: view the timetable
     private void viewTimeTable() {
-        System.out.println("--------------------------You are currently viewing the timetable------------------------");
-        ArrayList<Course> courseList = timeTable.getTimetable();
-        for (int i = 1; i <= 5; i++) {
-            String weekday = intToWeekday(i);
-            System.out.println("------" + weekday + "------");
 
-            ArrayList<String> courseByDay = new ArrayList<>();
-            for (int j = 0; j < courseList.size(); j++) {
-                Course course = courseList.get(j);
-                int day = course.getWeekday();
+        int number = 0;
+        while (number != -1) {
+            System.out.println("--------------------------You are currently viewing the timetable--------------------");
+            System.out.println("Enter -1 to exit");
+            ArrayList<Course> courseList = timeTable.getTimetable();
+            for (int i = 1; i <= 5; i++) {
+                String weekday = intToWeekday(i);
+                System.out.println("------" + weekday + "------");
 
-                while (day > 0) {
-                    int singleDay = day % 10;
-                    day /= 10;
-                    if (singleDay == i) {
-                        courseByDay.add(course.getStartTime() + "~" + course.getEndTime());
+                ArrayList<String> courseByDay = new ArrayList<>();
+                for (int j = 0; j < courseList.size(); j++) {
+                    Course course = courseList.get(j);
+                    int day = course.getWeekday();
+
+                    while (day > 0) {
+                        int singleDay = day % 10;
+                        day /= 10;
+                        if (singleDay == i) {
+                            courseByDay.add(course.getStartTime() + "~"
+                                    + course.getEndTime() + ": " + course.getCourseNameSection());
+                        }
                     }
                 }
-            }
-            Collections.sort(courseByDay);
+                Collections.sort(courseByDay);
 
-            for (String s : courseByDay) {
-                System.out.println(s);
+                for (String s : courseByDay) {
+                    System.out.println(s);
+                }
             }
+            number = scan.nextInt();
         }
+        System.out.println("back to the main page");
+
+
     }
 
+    // EFFECTS: return the string representation of the weekday
     private String intToWeekday(int number) {
         if (number == 1) {
             return "Monday";
@@ -335,5 +359,7 @@ public class TreeApp {
             return "Friday";
         }
     }
+
+
 
 }

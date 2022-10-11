@@ -35,9 +35,15 @@ public class Course {
         return this.endTime;
     }
 
+    // EFFECTS: return the courseName and section
+    public String getCourseNameSection() {
+        return courseNameSection;
+    }
+
+    // return the string representation of the course
     @Override
     public String toString() {
-        return this.courseNameSection + Integer.toString(getStartTime())
+        return getCourseNameSection() + Integer.toString(getStartTime())
                 + Integer.toString((getEndTime())) + this.weekday;
     }
 }
