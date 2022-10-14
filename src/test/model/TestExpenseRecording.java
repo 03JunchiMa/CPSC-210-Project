@@ -72,6 +72,7 @@ public class TestExpenseRecording {
         assertEquals("education -100\nfood -200\nincome 50\neducation -1\n",expenseRecording.toString());
     }
 
+
     @Test
     void testDeleteExpenseInfoByMultipleTimes() {
         Expense expense1 = new Expense(-1,"education");
@@ -250,9 +251,48 @@ public class TestExpenseRecording {
         assertEquals("education 16.7%\nfood 50.0%\nrental 33.3%\n",expenseRecording.viewAllCostCategoryInPercentage());
 
         assertFalse(expenseRecording.undoTheLastOperation());
-
-
     }
 
+    @Test
+    void testAddExpenseInfoAfterUndo() {
+        Expense expense1 = new Expense(-3,"education");
+        Expense expense2 = new Expense(-6,"rental");
+        Expense expense3 = new Expense(-9,"food");
+
+
+        expenseRecording.addExpenseInfo(expense1);
+        expenseRecording.addExpenseInfo(expense2);
+        expenseRecording.addExpenseInfo(expense3);
+
+        assertEquals(expense1,expenseRecording.getInfoById(1));
+        assertEquals(expense2,expenseRecording.getInfoById(2));
+        assertEquals(expense3,expenseRecording.getInfoById(3));
+        assertEquals(18,expenseRecording.getTotalCost());
+        assertEquals(-18,expenseRecording.getBudget());
+        assertEquals("food",expenseRecording.viewHighestCostCategory());
+        assertEquals("education 16.7%\nfood 50.0%\nrental 33.3%\n",expenseRecording.viewAllCostCategoryInPercentage());
+
+        // undo add
+        assertTrue(expenseRecording.undoTheLastOperation());
+
+        assertEquals(expense1,expenseRecording.getInfoById(1));
+        assertEquals(expense2,expenseRecording.getInfoById(2));
+        assertEquals(null,expenseRecording.getInfoById(3));
+        assertEquals(9,expenseRecording.getTotalCost());
+        assertEquals(-9,expenseRecording.getBudget());
+        assertEquals("rental",expenseRecording.viewHighestCostCategory());
+        assertEquals("education 33.3%\nrental 66.7%\n",expenseRecording.viewAllCostCategoryInPercentage());
+
+        // add after undo
+
+        expenseRecording.addExpenseInfo(expense3);
+        assertEquals(expense1,expenseRecording.getInfoById(1));
+        assertEquals(expense2,expenseRecording.getInfoById(2));
+        assertEquals(expense3,expenseRecording.getInfoById(4));
+        assertEquals(18,expenseRecording.getTotalCost());
+        assertEquals(-18,expenseRecording.getBudget());
+        assertEquals("food",expenseRecording.viewHighestCostCategory());
+        assertEquals("education 16.7%\nfood 50.0%\nrental 33.3%\n",expenseRecording.viewAllCostCategoryInPercentage());
+    }
 
 }
