@@ -24,11 +24,11 @@ public class ExpenseRecording {
 
     // REQUIRES: the amount in the expense should not be equals to 0
     // MODIFIES: this
-    // EFFECTS: Add a new expense(or income). If the amount of the expense is less than 0, then it's a cost.
+    // EFFECTS: Depends on the last operation, the system will either Add a new expense, or the id that is recorded
+    // in the last operation. If it's a new expense, if the amount of the expense is less than 0, then it's a cost.
     // the recorded number will be negative (which means the string representation will show the negative number),
     // and it will be subtracted from the budget and the corresponding category.
-    // If the amount of the expense is greater than 0,
-    // than it's an income, the recorded number will be positive
+    // If the amount of the expense is greater than 0, than it's an income, the recorded number will be positive
     // it won't be added to the budget, however, it will be added to the total income, value will be positive
     // The corresponding category of the cost will also be recorded
     // for the income you can set any category, the program only record the income to the category "income"
