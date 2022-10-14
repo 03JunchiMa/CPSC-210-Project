@@ -59,10 +59,10 @@ public class TreeApp {
         int budget = scan.nextInt();
 
         expenseRecording = new ExpenseRecording(budget);
-        runExpenseRecordingGreeting();
+
 
         while (true) {
-
+            runExpenseRecordingGreeting();
             int number = scan.nextInt();
 
             while (number != 1 && number != 2 && number != 3 && number != 4 && number != 5 && number != 6) {
@@ -76,7 +76,7 @@ public class TreeApp {
 
             switchNumberInrunExpenseRecording(number);
 
-            System.out.println("Returned back to the expense recording page");
+            System.out.println("---------------Returned back to the expense recording page---------------");
         }
     }
 
