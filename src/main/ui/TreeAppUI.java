@@ -28,8 +28,7 @@ public class TreeAppUI {
         scan = new Scanner(System.in);
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
-        timeTable = new TimeTable();
-        expenseRecording = new ExpenseRecording(0);
+        treeApp = new TreeApp();
         runTreeApp();
     }
 
@@ -138,7 +137,7 @@ public class TreeAppUI {
 
         int budget = scan.nextInt();
 
-        expenseRecording.setBudget(budget);
+        treeApp.getExpenseRecording().setBudget(budget);
 
         System.out.println("Budget has been set to " + budget);
     }
@@ -160,7 +159,7 @@ public class TreeAppUI {
 
         Expense expense = new Expense(amount,category);
 
-        expenseRecording.addExpenseInfo(expense);
+        treeApp.getExpenseRecording().addExpenseInfo(expense);
 
         System.out.println("This expense is added successfully, the expense id is:" + expense.getId());
     }
@@ -172,7 +171,7 @@ public class TreeAppUI {
 
         int id = scan.nextInt();
 
-        boolean checkDelete = expenseRecording.deleteExpenseInfo(id);
+        boolean checkDelete = treeApp.getExpenseRecording().deleteExpenseInfo(id);
 
         if (checkDelete) {
             System.out.println("The corresponding expense is been deleted successfully");
@@ -184,7 +183,7 @@ public class TreeAppUI {
     // MODIFIES: this
     // EFFECTS: undo the operation
     private void undoExpenseOperation() {
-        boolean checkUndo = expenseRecording.undoTheLastOperation();
+        boolean checkUndo = treeApp.getExpenseRecording().undoTheLastOperation();
         if (checkUndo) {
             System.out.println("undo successfully");
         } else {
@@ -205,11 +204,11 @@ public class TreeAppUI {
 
         while (number != 4) {
             if (number == 1) {
-                System.out.println(expenseRecording.viewHighestCostCategory());
+                System.out.println(treeApp.getExpenseRecording().viewHighestCostCategory());
             } else if (number == 2) {
-                System.out.println(expenseRecording.viewAllCostCategoryInPercentage());
+                System.out.println(treeApp.getExpenseRecording().viewAllCostCategoryInPercentage());
             } else {
-                System.out.println(expenseRecording.toString());
+                System.out.println(treeApp.getExpenseRecording().toString());
             }
             System.out.println("Enter the number again to see different views");
             number = scan.nextInt();
@@ -239,7 +238,7 @@ public class TreeAppUI {
         while (id != -1) {
             System.out.println("Please enter the corresponding expense id:");
             id = scan.nextInt();
-            String expenseInfo = expenseRecording.viewInfoById(id);
+            String expenseInfo = treeApp.getExpenseRecording().viewInfoById(id);
             if (expenseInfo.equals("")) {
                 System.out.println("The system did not find the corresponding expense info, please check the id");
             } else {
@@ -308,7 +307,7 @@ public class TreeAppUI {
         weekday = scan.nextInt();
 
         Course course = new Course(courseName,startTime,endTime,weekday);
-        boolean checkAddCourse = timeTable.addIntendedCourse(course);
+        boolean checkAddCourse = treeApp.getTimeTable().addIntendedCourse(course);
         if (checkAddCourse) {
             System.out.println("Course has been added successfully");
         } else {
@@ -355,7 +354,7 @@ public class TreeAppUI {
         while (number != -1) {
             System.out.println("--------------------------You are currently viewing the timetable--------------------");
             System.out.println("Enter -1 to exit");
-            ArrayList<Course> courseList = timeTable.getTimetable();
+            ArrayList<Course> courseList = treeApp.getTimeTable().getTimetable();
             for (int i = 1; i <= 5; i++) {
                 String weekday = intToWeekday(i);
                 System.out.println("------" + weekday + "------");
@@ -407,8 +406,6 @@ public class TreeAppUI {
 
     // EFFECTS: save the TreeApp
     private void saveTreeApp() {
-        treeApp.setExpenseRecording(expenseRecording);
-        treeApp.setTimetable(timeTable);
         try {
             jsonWriter.open();;
             jsonWriter.write(treeApp);
@@ -424,8 +421,6 @@ public class TreeAppUI {
         try {
             treeApp = jsonReader.read();
             System.out.println("Loaded successfully from previous saved data");
-            this.expenseRecording = treeApp.getExpenseRecording();
-            this.timeTable = treeApp.getTimeTable();
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }

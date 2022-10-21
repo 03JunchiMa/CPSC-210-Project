@@ -24,6 +24,7 @@ public class ExpenseRecording implements Writable {
         categoryCost = new TreeMap<>();
         idQueryExpense = new HashMap<>();
         setBudget(budget);
+
     }
 
     // REQUIRES: the amount in the expense should not be equals to 0
@@ -254,6 +255,21 @@ public class ExpenseRecording implements Writable {
         return this.totalCost;
     }
 
+    // EFFECTS: return expenseIdList
+    public ArrayList<Integer> getExpenseIdList() {
+        return this.expenseIdList;
+    }
+
+    // EFFECTS: return CategoryCost
+    public Map<String,Integer> getCategoryCost() {
+        return this.categoryCost;
+    }
+
+    // EFFECTS: return IdQueryExpense
+    public Map<Integer,Expense> getIdQueryExpense() {
+        return this.idQueryExpense;
+    }
+
     // EFFECTS: return the corresponding expense by id, if the corresponding id does not exist, return null.
     public Expense getInfoById(int id) {
         return idQueryExpense.get(id);
@@ -262,6 +278,11 @@ public class ExpenseRecording implements Writable {
     // EFFECTS: return the lastOperation operation
     public Operation getLastOperation() {
         return lastOperation;
+    }
+
+    // EFFECTS: return the idCounter
+    public int getIdCounter() {
+        return this.idCounter;
     }
 
     // EFFECTS: return a string with the representation of information of living expense in a compact form.

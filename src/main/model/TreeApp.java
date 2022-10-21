@@ -11,7 +11,10 @@ public class TreeApp implements Writable {
 
     // EFFECTS: initialize the TreeApp
     public TreeApp() {
-
+        expenseRecording = new ExpenseRecording(0);
+        Operation lastOperation = new Operation("undoTheLastOperation",new Expense(0,"null"));
+        expenseRecording.setLastOperation(lastOperation);
+        timetable = new TimeTable();
     }
 
     // EFFECTS: set the expenseRecording

@@ -1,0 +1,20 @@
+{
+    "ExpenseRecording": {
+        "TotalCost": 0,
+        "CategoryCost": [],
+        "LastOperation": {
+            "OperationName": "undoTheLastOperation",
+            "Expense": {
+                "Category": "null",
+                "Amount": 0,
+                "Id": 0
+            }
+        },
+        "ExpenseIdList": [],
+        "IdCounter": 1,
+        "Budget": 0,
+        "TotalIncome": 0,
+        "IdQueryExpense": []
+    },
+    "TimeTable": {"Courses": []}
+}

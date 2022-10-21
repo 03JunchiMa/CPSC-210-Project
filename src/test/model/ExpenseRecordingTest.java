@@ -5,7 +5,7 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 // Test ExpenseRecording class' functionality
-public class TestExpenseRecording {
+public class ExpenseRecordingTest {
     ExpenseRecording expenseRecording;
 
     @BeforeEach
