@@ -35,22 +35,15 @@ public class TreeAppUI {
     // EFFECTS: get the user input
     @SuppressWarnings("methodlength")
     private void runTreeApp() {
-        loadTreeApp();
-        if (treeApp.getExpenseRecording() != null) {
-            expenseRecording = treeApp.getExpenseRecording();
-        }
-        if (treeApp.getTimeTable() != null) {
-            timeTable = treeApp.getTimeTable();
-        }
 
         while (true) {
             System.out.println("-----------------------------------Main Page-----------------------------------------");
             System.out.println("Choose which application you want to use?(enter the corresponding entry number)");
-            System.out.println("1.ExpenseRecording 2.TimeTable 3.exit");
+            System.out.println("1.ExpenseRecording 2.TimeTable 3.Load from saved data 4. Save data 5.exit");
 
             int number = scan.nextInt();
 
-            while (number != 1 && number != 2 && number != 3) {
+            while (number != 1 && number != 2 && number != 3 && number != 4 && number != 5) {
                 System.out.println("invalid input, please enter again");
             }
 
@@ -58,12 +51,19 @@ public class TreeAppUI {
                 runExpenseRecording();
             } else if (number == 2) {
                 runTimeTable();
+            } else if (number == 3) {
+                loadTreeApp();
+            } else if (number == 4) {
+                saveTreeApp();
             } else {
                 System.out.println("-------------------------");
-                treeApp.setExpenseRecording(expenseRecording);
-                treeApp.setTimetable(timeTable);
-                saveTreeApp();
-                System.out.println("Exit successfully");
+                System.out.println("Before you exist, do you want to save the data? (YES/NO)");
+                String check = scan.next();
+                if (check.equalsIgnoreCase("YES")) {
+                    saveTreeApp();
+                } else {
+                    System.out.println("Exit successfully");
+                }
                 break;
             }
         }
@@ -74,18 +74,13 @@ public class TreeAppUI {
     // EFFECTS: run the expenseRecording, user can use this to record the expense
     private void runExpenseRecording() {
         System.out.println("---------------ExpenseRecording User Interface-------------------------------------------");
-        System.out.println("Please set a budget");
-
-        int budget = scan.nextInt();
-
-        expenseRecording = new ExpenseRecording(budget);
-
 
         while (true) {
             runExpenseRecordingGreeting();
             int number = scan.nextInt();
 
-            while (number != 1 && number != 2 && number != 3 && number != 4 && number != 5 && number != 6) {
+            while (number != 0 && number != 1 && number != 2 && number != 3
+                    && number != 4 && number != 5 && number != 6) {
                 System.out.println("Input number is not valid, please enter again");
                 number = scan.nextInt();
             }
@@ -94,7 +89,7 @@ public class TreeAppUI {
                 break;
             }
 
-            switchNumberInrunExpenseRecording(number);
+            switchNumberInRunExpenseRecording(number);
 
             System.out.println("---------------Returned back to the expense recording page---------------");
         }
@@ -105,14 +100,17 @@ public class TreeAppUI {
         System.out.println("If you want to exit and return back to the main page, enter 6 at anytime");
         System.out.println("Please enter the corresponding number to indicate what you want to do:");
         System.out.println("------------------------------");
-        System.out.println("1. add a new expense\n2. Delete an expense by id");
+        System.out.println("0. set a budget\n1. add a new expense\n2. Delete an expense by id");
         System.out.println("3. Undo the last add/delete operation\n4. View the expense");
         System.out.println("5. queryExpenseById\n6.exit");
     }
 
     // EFFECTS: switch the number case and determine which method to execute in the runExpenseRecording page
-    public void switchNumberInrunExpenseRecording(int number) {
+    public void switchNumberInRunExpenseRecording(int number) {
         switch (number) {
+            case 0:
+                setBudget();
+                break;
             case 1:
                 addExpense();
                 break;
@@ -129,6 +127,18 @@ public class TreeAppUI {
                 queryExpenseById();
                 break;
         }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: set the budget of the expenseRecording
+    private void setBudget() {
+        System.out.println("Please set a budget");
+
+        int budget = scan.nextInt();
+
+        expenseRecording = new ExpenseRecording(budget);
+
+        System.out.println("Budget has been set to " + budget);
     }
 
     // MODIFIES: this
@@ -398,6 +408,8 @@ public class TreeAppUI {
 
     // EFFECTS: save the TreeApp
     private void saveTreeApp() {
+        treeApp.setExpenseRecording(expenseRecording);
+        treeApp.setTimetable(timeTable);
         try {
             jsonWriter.open();;
             jsonWriter.write(treeApp);
@@ -413,6 +425,8 @@ public class TreeAppUI {
         try {
             treeApp = jsonReader.read();
             System.out.println("Loaded successfully from previous saved data");
+            this.expenseRecording = treeApp.getExpenseRecording();
+            this.timeTable = treeApp.getTimeTable();
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }

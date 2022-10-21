@@ -72,6 +72,7 @@ public class JsonReader {
         expenseRecording.setIdQueryExpense(idQueryExpense);
         expenseRecording.setLastOperation(lastOperation);
         expenseRecording.setIdCounter(idCounter);
+        System.out.println("------!!!!!budget------!!!!!" + budget);
 
         treeApp.setExpenseRecording(expenseRecording);
     }
