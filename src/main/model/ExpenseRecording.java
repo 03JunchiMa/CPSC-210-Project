@@ -199,6 +199,34 @@ public class ExpenseRecording implements Writable {
         this.budget = amount;
     }
 
+    public void setTotalIncome(int totalIncome) {
+        this.totalIncome = totalIncome;
+    }
+
+    public void setTotalCost(int totalCost) {
+        this.totalCost = totalCost;
+    }
+
+    public void setExpenseIdList(ArrayList<Integer> expenseIdList) {
+        this.expenseIdList = expenseIdList;
+    }
+
+    public void setCategoryCost(Map<String,Integer> categoryCost) {
+        this.categoryCost = categoryCost;
+    }
+
+    public void setIdQueryExpense(Map<Integer,Expense> idQueryExpense) {
+        this.idQueryExpense = idQueryExpense;
+    }
+
+    public void setLastOperation(Operation lastOperation) {
+        this.lastOperation = lastOperation;
+    }
+
+    public void setIdCounter(int idCounter) {
+        this.idCounter = idCounter;
+    }
+
     // MODIFIES: this
     // EFFECTS: decrease the budget by amount
     public void decreaseBudget(int amount) {
@@ -260,8 +288,8 @@ public class ExpenseRecording implements Writable {
         json.put("ExpenseIdList",expenseIdListToJson());
         json.put("CategoryCost",categoryCostToJson());
         json.put("IdQueryExpense",idQueryExpenseToJson());
-        json.put("LastOperation",lastOperation);
-        json.put("Idcounter",idCounter);
+        json.put("LastOperation",lastOperation.toJson());
+        json.put("IdCounter",idCounter);
         return json;
     }
 
@@ -296,7 +324,7 @@ public class ExpenseRecording implements Writable {
 
         for (Map.Entry<Integer,Expense> entry : idQueryExpense.entrySet()) {
             JSONObject json = new JSONObject();
-            json.put("ID",entry.getKey());
+            json.put("Id",entry.getKey());
             json.put("Expense",entry.getValue().toJson());
             jsonArr.put(json);
         }

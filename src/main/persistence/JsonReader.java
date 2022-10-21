@@ -1,9 +1,6 @@
 package persistence;
 
-import model.Expense;
-import model.ExpenseRecording;
-import model.TimeTable;
-import model.TreeApp;
+import model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -11,7 +8,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.stream.Stream;
 
 // Represents a reader that reads the information that have been entered in the TreeApp from JSON data stored in file
@@ -54,22 +51,120 @@ public class JsonReader {
 
     // MODIFIES: expenseRecording
     // EFFECTS: parses expenseInfo from JSON object and add it to expenseRecording
-    private void addExpenseRecording(TreeApp treeApp, JSONObject jsonObject) {
+    private void addExpenseRecording(TreeApp treeApp, JSONObject jsonObject1) {
         ExpenseRecording expenseRecording = new ExpenseRecording(0);
 
+        JSONObject jsonObject = jsonObject1.getJSONObject("ExpenseRecording");
         int budget = jsonObject.getInt("Budget");
         int totalIncome = jsonObject.getInt("TotalIncome");
         int totalCost = jsonObject.getInt("TotalCost");
+        ArrayList<Integer> expenseIdList = getExpenseIdList(jsonObject);
+        Map<String,Integer> categoryCost = getCategoryCost(jsonObject);
+        Map<Integer,Expense> idQueryExpense = getIdQueryExpense(jsonObject);
+        Operation lastOperation = getLastOperation(jsonObject);
+        int idCounter = jsonObject.getInt("IdCounter");
+
+        expenseRecording.setBudget(budget);
+        expenseRecording.setTotalIncome(totalIncome);
+        expenseRecording.setTotalCost(totalCost);
+        expenseRecording.setExpenseIdList(expenseIdList);
+        expenseRecording.setCategoryCost(categoryCost);
+        expenseRecording.setIdQueryExpense(idQueryExpense);
+        expenseRecording.setLastOperation(lastOperation);
+        expenseRecording.setIdCounter(idCounter);
+
+        treeApp.setExpenseRecording(expenseRecording);
     }
 
+    private ArrayList<Integer> getExpenseIdList(JSONObject jsonObject) {
+        ArrayList<Integer> expenseIdList = new ArrayList<>();
 
+        JSONArray jsonArray = jsonObject.getJSONArray("ExpenseIdList");
+
+        List list = jsonArray.toList();
+        for (int i = 0; i < list.size(); i++) {
+            expenseIdList.add((int)list.get(i));
+        }
+
+        return expenseIdList;
+    }
+
+    private Map<String, Integer> getCategoryCost(JSONObject jsonObject) {
+        Map<String, Integer> map = new TreeMap<>();
+
+        JSONArray jsonArray = jsonObject.getJSONArray("CategoryCost");
+
+        for (Object json : jsonArray) {
+            JSONObject nextCategoryCost = (JSONObject) json;
+            String category = nextCategoryCost.getString("Category");
+            int categoryCost = nextCategoryCost.getInt("CategoryCost");
+            map.put(category,categoryCost);
+        }
+
+        return map;
+    }
+
+    private Map<Integer, Expense> getIdQueryExpense(JSONObject jsonObject) {
+        Map<Integer,Expense> map = new HashMap<>();
+
+        JSONArray jsonArray = jsonObject.getJSONArray("IdQueryExpense");
+
+        for (Object json : jsonArray) {
+            JSONObject nextIdQueryExpense = (JSONObject) json;
+            int id = nextIdQueryExpense.getInt("Id");
+            JSONObject jsonObject1 = nextIdQueryExpense.getJSONObject("Expense");
+            int amount = jsonObject1.getInt("Amount");
+            String category = jsonObject1.getString("Category");
+            int idExpense = jsonObject1.getInt("Id");
+            Expense expense = new Expense(amount,category);
+            expense.setId(idExpense);
+
+            map.put(id,expense);
+        }
+
+        return map;
+    }
+
+    private Operation getLastOperation(JSONObject jsonObject) {
+        JSONObject json = jsonObject.getJSONObject("LastOperation");
+        String operationName = json.getString("OperationName");
+
+        JSONObject jsonObject1 = json.getJSONObject("Expense");
+        int amount = jsonObject1.getInt("Amount");
+        String category = jsonObject1.getString("Category");
+        int idExpense = jsonObject1.getInt("Id");
+        Expense expense = new Expense(amount,category);
+        expense.setId(idExpense);
+
+        Operation operation = new Operation(operationName,expense);
+
+        return operation;
+    }
 
 
     // MODIFIES: timeTable
     // EFFECTS: parses timetable information from JSON object and add it to timeTable
     private void addTimeTable(TreeApp treeApp, JSONObject jsonObject) {
-        TimeTable timeTable = (TimeTable) jsonObject.get("TimeTable");
+        TimeTable timeTable = new TimeTable();
+        addCourse(timeTable,jsonObject);
         treeApp.setTimetable(timeTable);
+    }
+
+    // EFFECTS: add the course from json object into the timetable
+    private void addCourse(TimeTable timeTable, JSONObject jsonObject1) {
+        JSONObject jsonObject = jsonObject1.getJSONObject("TimeTable");
+        JSONArray jsonArray = jsonObject.getJSONArray("Courses");
+
+        for (Object json : jsonArray) {
+            JSONObject nextCourse = (JSONObject) json;
+            String courseNameSeciton = nextCourse.getString("CourseNameSection");
+            int startTime = nextCourse.getInt("StartTime");
+            int endTime = nextCourse.getInt("EndTime");
+            int weekDay = nextCourse.getInt("Weekday");
+
+            Course course = new Course(courseNameSeciton,startTime,endTime,weekDay);
+            timeTable.addIntendedCourse(course);
+        }
     }
 
 }

@@ -84,7 +84,7 @@ public class TimeTable implements Writable {
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
-        json.put("timeTable",coursesToJson());
+        json.put("Courses",coursesToJson());
         return json;
     }
 

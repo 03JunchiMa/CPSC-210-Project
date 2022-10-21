@@ -408,6 +408,7 @@ public class TreeAppUI {
         }
     }
 
+    // EFFECTS: load the TreeApp from previous saved data
     private void loadTreeApp() {
         try {
             treeApp = jsonReader.read();
