@@ -28,6 +28,8 @@ public class TreeAppUI {
         scan = new Scanner(System.in);
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
+        timeTable = new TimeTable();
+        expenseRecording = new ExpenseRecording(0);
         runTreeApp();
     }
 
@@ -136,7 +138,7 @@ public class TreeAppUI {
 
         int budget = scan.nextInt();
 
-        expenseRecording = new ExpenseRecording(budget);
+        expenseRecording.setBudget(budget);
 
         System.out.println("Budget has been set to " + budget);
     }
@@ -249,8 +251,6 @@ public class TreeAppUI {
     // EFFECTS: run the timetable, user can use this to add and delete intended course
     private void runTimeTable() {
         timeTableGreeting();
-
-        timeTable = new TimeTable();
 
         int number = scan.nextInt();
 
@@ -371,7 +371,6 @@ public class TreeAppUI {
             number = scan.nextInt();
         }
         System.out.println("back to the main page");
-
     }
 
     // EFFECTS: arrange the course from day to day

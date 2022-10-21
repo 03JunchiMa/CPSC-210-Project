@@ -147,12 +147,13 @@ public class JsonReader {
     // EFFECTS: parses timetable information from JSON object and add it to timeTable
     private void addTimeTable(TreeApp treeApp, JSONObject jsonObject) {
         TimeTable timeTable = new TimeTable();
-        addCourse(timeTable,jsonObject);
+        addCourses(timeTable,jsonObject);
         treeApp.setTimetable(timeTable);
     }
 
-    // EFFECTS: add the course from json object into the timetable
-    private void addCourse(TimeTable timeTable, JSONObject jsonObject1) {
+    // EFFECTS: add the cour
+    // se from json object into the timetable
+    private void addCourses(TimeTable timeTable, JSONObject jsonObject1) {
         JSONObject jsonObject = jsonObject1.getJSONObject("TimeTable");
         JSONArray jsonArray = jsonObject.getJSONArray("Courses");
 
@@ -162,6 +163,8 @@ public class JsonReader {
             int startTime = nextCourse.getInt("StartTime");
             int endTime = nextCourse.getInt("EndTime");
             int weekDay = nextCourse.getInt("Weekday");
+
+            System.out.println(courseNameSeciton + "startTime\n");
 
             Course course = new Course(courseNameSeciton,startTime,endTime,weekDay);
             timeTable.addIntendedCourse(course);
