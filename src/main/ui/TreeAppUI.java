@@ -1,30 +1,47 @@
 package ui;
 
-import model.Course;
-import model.Expense;
-import model.ExpenseRecording;
-import model.TimeTable;
+import model.*;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-// TreeApp application
-public class TreeApp {
+// TreeAppModel application
+public class TreeAppUI {
 
+    private static final String JSON_STORE = "./data/TreeApp.json";
+
+    TreeApp treeApp;
     TimeTable timeTable;
     ExpenseRecording expenseRecording;
     private Scanner scan;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // EFFECTS: runs the tree app
-    public TreeApp() {
+    public TreeAppUI() {
+        treeApp = new TreeApp();
+        scan = new Scanner(System.in);
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runTreeApp();
     }
 
     // MODIFIES: this
     // EFFECTS: get the user input
+    @SuppressWarnings("methodlength")
     private void runTreeApp() {
-        scan = new Scanner(System.in);
+        loadTreeApp();
+        if (treeApp.getExpenseRecording() != null) {
+            expenseRecording = treeApp.getExpenseRecording();
+        }
+        if (treeApp.getTimeTable() != null) {
+            timeTable = treeApp.getTimeTable();
+        }
 
         while (true) {
             System.out.println("-----------------------------------Main Page-----------------------------------------");
@@ -43,6 +60,9 @@ public class TreeApp {
                 runTimeTable();
             } else {
                 System.out.println("-------------------------");
+                treeApp.setExpenseRecording(expenseRecording);
+                treeApp.setTimetable(timeTable);
+                saveTreeApp();
                 System.out.println("Exit successfully");
                 break;
             }
@@ -373,6 +393,27 @@ public class TreeApp {
             return "Thursday";
         } else {
             return "Friday";
+        }
+    }
+
+    // EFFECTS: save the TreeApp
+    private void saveTreeApp() {
+        try {
+            jsonWriter.open();;
+            jsonWriter.write(treeApp);
+            jsonWriter.close();
+            System.out.println("Saved the data to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    private void loadTreeApp() {
+        try {
+            treeApp = jsonReader.read();
+            System.out.println("Loaded successfully from previous saved data");
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 

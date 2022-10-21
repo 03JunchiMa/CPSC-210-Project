@@ -1,9 +1,13 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
 // generate all the possible timetables based on the user input
-public class TimeTable {
+public class TimeTable implements Writable {
 
     private ArrayList<Course> timetable;
 
@@ -75,6 +79,24 @@ public class TimeTable {
         }
 
         return true;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("timeTable",coursesToJson());
+        return json;
+    }
+
+    // EFFECTS: return courses as a JSON array
+    public JSONArray coursesToJson() {
+        JSONArray jsonArr = new JSONArray();
+
+        for (Course course : this.timetable) {
+            jsonArr.put(course.toJson());
+        }
+
+        return jsonArr;
     }
 
 }

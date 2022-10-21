@@ -1,7 +1,10 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // Course class, provide the struct for the course
-public class Course {
+public class Course implements Writable  {
     private String courseNameSection;
     private int startTime;
     private int endTime;
@@ -46,4 +49,16 @@ public class Course {
         return getCourseNameSection() + Integer.toString(getStartTime())
                 + Integer.toString((getEndTime())) + this.weekday;
     }
+
+    // convert the Course to Json object
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("CourseNameSection",courseNameSection);
+        json.put("StartTime",startTime);
+        json.put("EndTime",endTime);
+        json.put("Weekday",weekday);
+        return json;
+    }
+
 }

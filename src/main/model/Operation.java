@@ -1,7 +1,10 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // Operation class
-public class Operation {
+public class Operation implements Writable {
     private String operationName;
     private Expense expense;
 
@@ -25,5 +28,13 @@ public class Operation {
     @Override
     public String toString() {
         return this.operationName + " " + this.expense.toString();
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("OperationName",operationName);
+        json.put("Expense",expense.toJson());
+        return json;
     }
 }

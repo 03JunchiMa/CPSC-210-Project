@@ -1,9 +1,13 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.*;
 
 // set a budget and record the living cost (income) to different categories and view it
-public class ExpenseRecording {
+public class ExpenseRecording implements Writable {
 
     private int budget;
     private int totalIncome;
@@ -245,6 +249,58 @@ public class ExpenseRecording {
         }
 
         return rep;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("Budget",budget);
+        json.put("TotalIncome",totalIncome);
+        json.put("TotalCost",totalCost);
+        json.put("ExpenseIdList",expenseIdListToJson());
+        json.put("CategoryCost",categoryCostToJson());
+        json.put("IdQueryExpense",idQueryExpenseToJson());
+        json.put("LastOperation",lastOperation);
+        json.put("Idcounter",idCounter);
+        return json;
+    }
+
+    // EFFECTS: return expenseIdList as JSON array
+    public JSONArray expenseIdListToJson() {
+        JSONArray jsonArr = new JSONArray();
+
+        for (Integer i : expenseIdList) {
+            jsonArr.put(i);
+        }
+
+        return jsonArr;
+    }
+
+    // EFFECTS: return categoryCost as JSON array
+    public JSONArray categoryCostToJson() {
+        JSONArray jsonArr = new JSONArray();
+
+        for (Map.Entry<String,Integer> entry : categoryCost.entrySet()) {
+            JSONObject json = new JSONObject();
+            json.put("Category",entry.getKey());
+            json.put("CategoryCost",entry.getValue());
+            jsonArr.put(json);
+        }
+
+        return jsonArr;
+    }
+
+    // EFFECTS: return idQueryExpense as JSON array
+    public JSONArray idQueryExpenseToJson() {
+        JSONArray jsonArr = new JSONArray();
+
+        for (Map.Entry<Integer,Expense> entry : idQueryExpense.entrySet()) {
+            JSONObject json = new JSONObject();
+            json.put("ID",entry.getKey());
+            json.put("Expense",entry.getValue().toJson());
+            jsonArr.put(json);
+        }
+        return jsonArr;
     }
 
 }
