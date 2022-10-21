@@ -1,0 +1,56 @@
+{
+    "ExpenseRecording": {
+        "TotalCost": 0,
+        "CategoryCost": [
+            {
+                "CategoryCost": -112931,
+                "Category": "education"
+            },
+            {
+                "CategoryCost": -120,
+                "Category": "food"
+            },
+            {
+                "CategoryCost": 100,
+                "Category": "income"
+            }
+        ],
+        "LastOperation": {
+            "OperationName": "addExpenseInfo",
+            "Expense": {
+                "Category": "food",
+                "Amount": -200,
+                "Id": 0
+            }
+        },
+        "ExpenseIdList": [
+            1,
+            2
+        ],
+        "IdCounter": 1,
+        "Budget": 0,
+        "TotalIncome": 0,
+        "IdQueryExpense": [{
+            "Expense": {
+                "Category": "food",
+                "Amount": -100,
+                "Id": 0
+            },
+            "Id": 0
+        }]
+    },
+    "TimeTable": {"Courses": [
+        {
+            "Weekday": 123,
+            "EndTime": 1200,
+            "StartTime": 1100,
+            "CourseNameSection": "CPSC 100 100"
+        },
+        {
+            "Weekday": 135,
+            "EndTime": 1400,
+            "StartTime": 1300,
+            "CourseNameSection": "CPSC 210 102"
+        }
+    ]}
+}

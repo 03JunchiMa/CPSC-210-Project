@@ -16,8 +16,6 @@ public class TreeAppUI {
     private static final String JSON_STORE = "./data/TreeApp.json";
 
     TreeApp treeApp;
-    TimeTable timeTable;
-    ExpenseRecording expenseRecording;
     private Scanner scan;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
@@ -40,7 +38,7 @@ public class TreeAppUI {
         while (true) {
             System.out.println("-----------------------------------Main Page-----------------------------------------");
             System.out.println("Choose which application you want to use?(enter the corresponding entry number)");
-            System.out.println("1.ExpenseRecording 2.TimeTable 3.Load from saved data 4. Save data 5.exit");
+            System.out.println("1. ExpenseRecording\n2. TimeTable\n3. Load from saved data\n4. Save data\n5. Exit");
 
             int number = scan.nextInt();
 
@@ -58,7 +56,7 @@ public class TreeAppUI {
                 saveTreeApp();
             } else {
                 System.out.println("-------------------------");
-                System.out.println("Before you exist, do you want to save the data? (YES/NO)");
+                System.out.println("Before you exit, do you want to save the data? (YES/NO)");
                 String check = scan.next();
                 if (check.equalsIgnoreCase("YES")) {
                     saveTreeApp();
@@ -103,7 +101,7 @@ public class TreeAppUI {
         System.out.println("------------------------------");
         System.out.println("0. set a budget\n1. add a new expense\n2. Delete an expense by id");
         System.out.println("3. Undo the last add/delete operation\n4. View the expense");
-        System.out.println("5. queryExpenseById\n6.exit");
+        System.out.println("5. queryExpenseById\n6. exit");
     }
 
     // EFFECTS: switch the number case and determine which method to execute in the runExpenseRecording page
@@ -339,7 +337,7 @@ public class TreeAppUI {
         weekday = scan.nextInt();
 
         Course course = new Course(courseName,startTime,endTime,weekday);
-        boolean checkDeleteCourse = timeTable.deleteIntendedCourse(course);
+        boolean checkDeleteCourse = treeApp.getTimeTable().deleteIntendedCourse(course);
         if (checkDeleteCourse) {
             System.out.println("Course has been deleted successfully");
         } else {
