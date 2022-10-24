@@ -32,7 +32,6 @@ public class TreeAppUI {
 
     // MODIFIES: this
     // EFFECTS: get the user input
-    @SuppressWarnings("methodlength")
     private void runTreeApp() {
 
         while (true) {
@@ -46,27 +45,32 @@ public class TreeAppUI {
                 System.out.println("invalid input, please enter again");
             }
 
-            if (number == 1) {
-                runExpenseRecording();
-            } else if (number == 2) {
-                runTimeTable();
-            } else if (number == 3) {
-                loadTreeApp();
-            } else if (number == 4) {
-                saveTreeApp();
-            } else {
-                System.out.println("-------------------------");
-                System.out.println("Before you exit, do you want to save the data? (YES/NO)");
-                String check = scan.next();
-                if (check.equalsIgnoreCase("YES")) {
-                    saveTreeApp();
-                } else {
-                    System.out.println("Exit successfully");
-                }
-                break;
-            }
+            if (treeAppMainPageDecision(number)) break;
         }
 
+    }
+
+    private boolean treeAppMainPageDecision(int number) {
+        if (number == 1) {
+            runExpenseRecording();
+        } else if (number == 2) {
+            runTimeTable();
+        } else if (number == 3) {
+            loadTreeApp();
+        } else if (number == 4) {
+            saveTreeApp();
+        } else {
+            System.out.println("-------------------------");
+            System.out.println("Before you exit, do you want to save the data? (YES/NO)");
+            String check = scan.next();
+            if (check.equalsIgnoreCase("YES")) {
+                saveTreeApp();
+            } else {
+                System.out.println("Exit successfully");
+            }
+            return true;
+        }
+        return false;
     }
 
 
