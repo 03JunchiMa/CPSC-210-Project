@@ -42,10 +42,12 @@ public class TreeAppUI {
             int number = scan.nextInt();
 
             while (number != 1 && number != 2 && number != 3 && number != 4 && number != 5) {
-                System.out.println("invalid input, please enter again");
+                System.out.println("Invalid input, please enter again");
             }
 
-            if (treeAppMainPageDecision(number)) break;
+            if (treeAppMainPageDecision(number)) {
+                break;
+            }
         }
 
     }
@@ -371,7 +373,7 @@ public class TreeAppUI {
             }
             number = scan.nextInt();
         }
-        System.out.println("back to the main page");
+        System.out.println("Back to the main page");
     }
 
     // EFFECTS: arrange the course from day to day
@@ -423,6 +425,8 @@ public class TreeAppUI {
         try {
             treeApp = jsonReader.read();
             System.out.println("Loaded successfully from previous saved data");
+            System.out.printf("!!!!!------Your remaining budget %d------!!!!!\n"
+                    + treeApp.getExpenseRecording().getBudget());
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }

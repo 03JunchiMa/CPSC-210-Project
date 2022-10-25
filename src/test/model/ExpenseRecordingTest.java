@@ -212,7 +212,7 @@ public class ExpenseRecordingTest {
         assertFalse(expenseRecording.undoTheLastOperation());
     }
 
-    @Test // first undo the delete then undo add
+    @Test // first undo delete then undo add
     void testUndoTheLastOperationDeleteAdd() {
         Expense expense1 = new Expense(-1,"education");
         Expense expense2 = new Expense(-2,"rental");
