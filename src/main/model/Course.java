@@ -50,7 +50,7 @@ public class Course implements Writable  {
                 + Integer.toString((getEndTime())) + this.weekday;
     }
 
-    // convert the Course to Json object
+    // EFFECTS: convert the Course to Json object
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

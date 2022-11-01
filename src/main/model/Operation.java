@@ -30,6 +30,7 @@ public class Operation implements Writable {
         return this.operationName + " " + this.expense.toString();
     }
 
+    // EFFECTS: convert the operation to json object
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

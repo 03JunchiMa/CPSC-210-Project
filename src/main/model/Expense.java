@@ -46,6 +46,7 @@ public class Expense implements Writable {
         return this.amount + " " + category + " " + id;
     }
 
+    // EFFECTS: convert the expense to json object
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

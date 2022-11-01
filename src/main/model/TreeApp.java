@@ -37,6 +37,7 @@ public class TreeApp implements Writable {
         return this.timetable;
     }
 
+    // EFFECTS: convert the treeApp to json object
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

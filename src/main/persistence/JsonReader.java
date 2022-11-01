@@ -76,6 +76,7 @@ public class JsonReader {
         treeApp.setExpenseRecording(expenseRecording);
     }
 
+    // EFFECTS: return the json representation of the expenseIdList
     private ArrayList<Integer> getExpenseIdList(JSONObject jsonObject) {
         ArrayList<Integer> expenseIdList = new ArrayList<>();
 
@@ -89,6 +90,7 @@ public class JsonReader {
         return expenseIdList;
     }
 
+    // EFFECTS: return the json representation of the categoryCost
     private Map<String, Integer> getCategoryCost(JSONObject jsonObject) {
         Map<String, Integer> map = new TreeMap<>();
 
@@ -104,6 +106,7 @@ public class JsonReader {
         return map;
     }
 
+    // EFFECTS: return the json representation of the IdQueryExpense
     private Map<Integer, Expense> getIdQueryExpense(JSONObject jsonObject) {
         Map<Integer,Expense> map = new HashMap<>();
 
@@ -125,6 +128,7 @@ public class JsonReader {
         return map;
     }
 
+    // EFFECTS: return the json representation of the lastOperation
     private Operation getLastOperation(JSONObject jsonObject) {
         JSONObject json = jsonObject.getJSONObject("LastOperation");
         String operationName = json.getString("OperationName");
@@ -150,8 +154,7 @@ public class JsonReader {
         treeApp.setTimetable(timeTable);
     }
 
-    // EFFECTS: add the cour
-    // se from json object into the timetable
+    // EFFECTS: add the course from json object into the timetable
     private void addCourses(TimeTable timeTable, JSONObject jsonObject1) {
         JSONObject jsonObject = jsonObject1.getJSONObject("TimeTable");
         JSONArray jsonArray = jsonObject.getJSONArray("Courses");

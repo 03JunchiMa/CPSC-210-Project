@@ -73,6 +73,7 @@ public class TimeTableAlgorithms {
 
     }
 
+    // EFFECTS: add a course to the timetable, so that the time slot is placed
     private void addToTimeTable() {
         ArrayList<Course> tempCourses = new ArrayList<>();
         for (int i = 0; i < currentCourses.size(); i++) {
@@ -160,14 +161,14 @@ public class TimeTableAlgorithms {
         return courses;
     }
 
-    // get the course name inside the course
+    // EFFECTS: get the course name inside the course
     public String getCourseName(Course course) {
         String courseNameSection = course.getCourseNameSection();
         int lastSpace = courseNameSection.lastIndexOf(' ');
         return courseNameSection.substring(0,lastSpace);
     }
 
-    // get the courseSection inside the course
+    // EFFECTS: get the courseSection inside the course
     public String getCourseSection(Course course) {
         String courseNameSection = course.getCourseNameSection();
         int lastSpace = courseNameSection.lastIndexOf(' ');
@@ -199,6 +200,7 @@ public class TimeTableAlgorithms {
 
 
 
+    // Temp test
     @SuppressWarnings("methodlength")
     public static void main(String[] args) {
         ArrayList<Course> tempCourses = new ArrayList<>();

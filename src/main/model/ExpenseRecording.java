@@ -300,6 +300,7 @@ public class ExpenseRecording implements Writable {
         return rep;
     }
 
+    // EFFECTS: convert the expenserecording to json object
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

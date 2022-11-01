@@ -81,6 +81,7 @@ public class TimeTable implements Writable {
         return true;
     }
 
+    // EFFECTS: convert the timetable to json object
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
