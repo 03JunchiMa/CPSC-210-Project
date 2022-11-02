@@ -7,14 +7,18 @@ import java.util.*;
 // providing algorithms for timetable
 public class TimeTableAlgorithms {
     private static final int INTERVALLENGTH = 2410;
-    private ArrayList<ArrayList<Course>> validTimeTable;
-    private HashMap<String,Boolean> checkNoDuplicateCourse;
-    private HashMap<Integer,int[]> timeInterval;
-    private ArrayList<Course> currentCourses;
 
     // REQUIRES: courses has no duplicates elements
-    // EFFECTS: return all the valid combinations of the timetable
-    public ArrayList<ArrayList<Course>> getValidTimeTable(ArrayList<Course> duplicateCourses, int numberOfCourses) {
+    // EFFECTS: return all the valid combinations of the timetable with given number of courses, it will be returned
+    // as sorted based on the start time of the courses, if two courses start with the same time, then the
+    // course with less Lexicographical order will be placed first
+    public static ArrayList<ArrayList<Course>> getValidTimeTable(ArrayList<Course> duplicateCourses,
+                                                                 int numberOfCourses) {
+        ArrayList<ArrayList<Course>> validTimeTable;
+        HashMap<String,Boolean> checkNoDuplicateCourse;
+        HashMap<Integer,int[]> timeInterval;
+        ArrayList<Course> currentCourses;
+
         validTimeTable = new ArrayList<>();
         checkNoDuplicateCourse = new HashMap<>();
         currentCourses = new ArrayList<>();
@@ -24,12 +28,13 @@ public class TimeTableAlgorithms {
         }
         ArrayList courses = unique(duplicateCourses);
         courses = sortCourseByTimeDuration(courses); // optimize search order, starting from the longest time duration
-        searchTimeTables(courses,0,numberOfCourses,0);
+        searchTimeTables(validTimeTable,timeInterval,checkNoDuplicateCourse,
+                currentCourses, courses,0,numberOfCourses,0);
         return validTimeTable;
     }
 
     // EFFECTS: return the courses with no duplicates
-    public ArrayList<Course> unique(ArrayList<Course> duplicateCourses) {
+    public static ArrayList<Course> unique(ArrayList<Course> duplicateCourses) {
         ArrayList<Course> courses = new ArrayList<>();
         ArrayList<Course> sortedCourses;
         sortedCourses = sortCourseByLexicographical(duplicateCourses);
@@ -44,13 +49,17 @@ public class TimeTableAlgorithms {
 
     // MODOFIES: ArrayList<ArrayList<Course>>
     // EFFECTS: search all the valid timetables combinations
-    public void searchTimeTables(ArrayList<Course> courseForSelection, int u, int n, int last) {
+    public static void searchTimeTables(ArrayList<ArrayList<Course>> validTimeTable,
+                                        HashMap<Integer,int[]> timeInterval,
+                                        HashMap<String,Boolean> checkNoDuplicateCourse,
+                                        ArrayList<Course> currentCourses, ArrayList<Course> courseForSelection,
+                                        int u, int n, int last) {
         if (currentCourses.size() + (courseForSelection.size() - last) < n) {
             return;
         }
 
         if (currentCourses.size() == n) {
-            addToTimeTable();
+            addToTimeTable(currentCourses,validTimeTable);
             return;
         }
 
@@ -58,13 +67,14 @@ public class TimeTableAlgorithms {
             Course course = courseForSelection.get(i);
             String courseName = course.getCourseNameSection();
             if (! checkNoDuplicateCourse.containsKey(courseName)) {
-                if (checkTimeTable(course)) {
-                    addCourseToTimeTable(course,1);
+                if (checkTimeTable(timeInterval, course)) {
+                    addCourseToTimeTable(timeInterval, course,1);
                     checkNoDuplicateCourse.put(courseName,true);
                     currentCourses.add(course);
 
-                    searchTimeTables(courseForSelection, u + 1, n, i + 1);
-                    addCourseToTimeTable(course,-1);
+                    searchTimeTables(validTimeTable,timeInterval, checkNoDuplicateCourse,
+                            currentCourses, courseForSelection, u + 1, n, i + 1);
+                    addCourseToTimeTable(timeInterval, course,-1);
                     checkNoDuplicateCourse.remove(courseName);
                     currentCourses.remove(currentCourses.size() - 1);
                 }
@@ -74,16 +84,17 @@ public class TimeTableAlgorithms {
     }
 
     // EFFECTS: add a course to the timetable
-    private void addToTimeTable() {
+    private static void addToTimeTable(ArrayList<Course> currentCourses, ArrayList<ArrayList<Course>> validTimeTable) {
         ArrayList<Course> tempCourses = new ArrayList<>();
         for (int i = 0; i < currentCourses.size(); i++) {
             tempCourses.add(currentCourses.get(i));
         }
+        tempCourses = sortCourseByStartTime(tempCourses);
         validTimeTable.add(tempCourses);
     }
 
     // // EFFECTS: add a course to the timetable, so that the time slot is occupied
-    public void addCourseToTimeTable(Course course, int c) {
+    public static void addCourseToTimeTable(HashMap<Integer,int[]> timeInterval, Course course, int c) {
         int weekday = course.getWeekday();
         while (weekday > 0) {
             int day = weekday % 10;
@@ -101,7 +112,7 @@ public class TimeTableAlgorithms {
     }
 
     // EFFECTS: check whether a class can be added into the timetable
-    public boolean checkTimeTable(Course course) {
+    public static boolean checkTimeTable(HashMap<Integer,int[]> timeInterval, Course course) {
 
         int weekday = course.getWeekday();
         boolean check = true;
@@ -126,7 +137,7 @@ public class TimeTableAlgorithms {
 
 
     // EFFECTS: sort Course by lexicographical order
-    public ArrayList<Course> sortCourseByLexicographical(ArrayList<Course> tempCourses) {
+    public static ArrayList<Course> sortCourseByLexicographical(ArrayList<Course> tempCourses) {
         ArrayList<Course> courses = new ArrayList<>();
 
         for (int i = 0; i < tempCourses.size(); i++) {
@@ -144,7 +155,7 @@ public class TimeTableAlgorithms {
     }
 
     // EFFECTS: sort Course by time interval length order
-    public ArrayList<Course> sortCourseByTimeDuration(ArrayList<Course> tempCourses) {
+    public static ArrayList<Course> sortCourseByTimeDuration(ArrayList<Course> tempCourses) {
         ArrayList<Course> courses = new ArrayList<>();
 
         for (int i = 0; i < tempCourses.size(); i++) {
@@ -162,7 +173,7 @@ public class TimeTableAlgorithms {
     }
 
     // EFFECTS: sort Course by start time
-    public ArrayList<Course> sortCourseByStartTime(ArrayList<Course> tempCourses) {
+    public static ArrayList<Course> sortCourseByStartTime(ArrayList<Course> tempCourses) {
         ArrayList<Course> courses = new ArrayList<>();
 
         for (int i = 0; i < tempCourses.size(); i++) {
@@ -179,24 +190,10 @@ public class TimeTableAlgorithms {
         return courses;
     }
 
-    // EFFECTS: get the course name inside the course
-    public String getCourseName(Course course) {
-        String courseNameSection = course.getCourseNameSection();
-        int lastSpace = courseNameSection.lastIndexOf(' ');
-        return courseNameSection.substring(0,lastSpace);
-    }
-
-    // EFFECTS: get the courseSection inside the course
-    public String getCourseSection(Course course) {
-        String courseNameSection = course.getCourseNameSection();
-        int lastSpace = courseNameSection.lastIndexOf(' ');
-        return courseNameSection.substring(lastSpace + 1);
-    }
-
     // EFFECTS: return all the valid combinations of the timetable that don't have any classes between the given
     // time slot (this means in this time slot you are free)
-    public ArrayList<ArrayList<Course>> getTimeTableAvoidTimeSlot(ArrayList<ArrayList<Course>> allCoursesComb,
-                                                                  int startTime, int endTime) {
+    public static ArrayList<ArrayList<Course>> getTimeTableAvoidTimeSlot(ArrayList<ArrayList<Course>> allCoursesComb,
+                                                                         int startTime, int endTime) {
         ArrayList<ArrayList<Course>> timeTableAvoidedTimeSlot = new ArrayList<>();
         for (ArrayList<Course> courses : allCoursesComb) {
             boolean check = true;
@@ -222,7 +219,7 @@ public class TimeTableAlgorithms {
 
     // EFFECTS: return all the valid combination of the timetable that can have lunchtime, which means there
     // are no courses between 11:00 and 13:00
-    public ArrayList<ArrayList<Course>> getTimeTableForLunchTime(ArrayList<ArrayList<Course>> allCoursesComb) {
+    public static ArrayList<ArrayList<Course>> getTimeTableForLunchTime(ArrayList<ArrayList<Course>> allCoursesComb) {
         return getTimeTableAvoidTimeSlot(allCoursesComb,1100,1300);
     }
 
