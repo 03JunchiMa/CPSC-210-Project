@@ -11,7 +11,7 @@ public class TimeTableAlgorithms {
     // REQUIRES: courses has no duplicates elements
     // EFFECTS: return all the valid combinations of the timetable with given number of courses, it will be returned
     // as sorted based on the start time of the courses, if two courses start with the same time, then the
-    // course with less Lexicographical order will be placed first
+    // course with less Lexicographical order will be placed first, return empty timetable if  number of courses is 0.
     public static ArrayList<ArrayList<Course>> getValidTimeTable(ArrayList<Course> duplicateCourses,
                                                                  int numberOfCourses) {
         ArrayList<ArrayList<Course>> validTimeTable;
@@ -48,22 +48,27 @@ public class TimeTableAlgorithms {
     }
 
     // MODOFIES: ArrayList<ArrayList<Course>>
-    // EFFECTS: search all the valid timetables combinations
+    // EFFECTS: search all the valid timetables combinations, if the number of courses is 0, return the empty timetable.
+    @SuppressWarnings("methodlength")
     public static void searchTimeTables(ArrayList<ArrayList<Course>> validTimeTable,
                                         HashMap<Integer,int[]> timeInterval,
                                         HashMap<String,Boolean> checkNoDuplicateCourse,
                                         ArrayList<Course> currentCourses, ArrayList<Course> courseForSelection,
-                                        int u, int n, int last) {
-        if (currentCourses.size() + (courseForSelection.size() - last) < n) {
+                                        int currentPosition, int numberOfCourses, int lastPosition) {
+        if (numberOfCourses == 0) {
             return;
         }
 
-        if (currentCourses.size() == n) {
+        if (currentCourses.size() + (courseForSelection.size() - lastPosition) < numberOfCourses) {
+            return;
+        }
+
+        if (currentCourses.size() == numberOfCourses) {
             addToTimeTable(currentCourses,validTimeTable);
             return;
         }
 
-        for (int i = last; i < courseForSelection.size(); i++) {
+        for (int i = lastPosition; i < courseForSelection.size(); i++) {
             Course course = courseForSelection.get(i);
             String courseName = course.getCourseNameSection();
             if (! checkNoDuplicateCourse.containsKey(courseName)) {
@@ -73,7 +78,7 @@ public class TimeTableAlgorithms {
                     currentCourses.add(course);
 
                     searchTimeTables(validTimeTable,timeInterval, checkNoDuplicateCourse,
-                            currentCourses, courseForSelection, u + 1, n, i + 1);
+                            currentCourses, courseForSelection, currentPosition + 1, numberOfCourses, i + 1);
                     addCourseToTimeTable(timeInterval, course,-1);
                     checkNoDuplicateCourse.remove(courseName);
                     currentCourses.remove(currentCourses.size() - 1);
@@ -223,4 +228,49 @@ public class TimeTableAlgorithms {
         return getTimeTableAvoidTimeSlot(allCoursesComb,1100,1300);
     }
 
+//    @SuppressWarnings("methodlength")
+//    public static void main(String[] args) {
+//        ArrayList<Course> tempCourses = new ArrayList<>();
+//
+//        long startTime = System.currentTimeMillis();
+//        tempCourses.add(new Course("CPSC 210 102",1300,1400,135));
+//        tempCourses.add(new Course("CPSC 310 102",1500,1600,24));
+//        tempCourses.add(new Course("CPSC 310 102",1400,1500,24));
+//        tempCourses.add(new Course("CPSC 410 102",1500,1600,24));
+////        tempCourses.add(new Course("A 100 102",300,400,135));
+////        tempCourses.add(new Course("A 200 102",500,600,24));
+////        tempCourses.add(new Course("A 300 102",700,800,24));
+////        tempCourses.add(new Course("A 400 102",900,1000,24));
+////        tempCourses.add(new Course("B 100 102",300,400,3));
+////        tempCourses.add(new Course("B 200 102",500,600,2));
+////        tempCourses.add(new Course("B 300 102",700,800,1));
+////        tempCourses.add(new Course("B 400 102",900,1000,45));
+////        tempCourses.add(new Course("C 100 102",1700,1800,3));
+////        tempCourses.add(new Course("C 200 102",1800,1900,24));
+////        tempCourses.add(new Course("C 300 102",700,800,1));
+////        tempCourses.add(new Course("C 400 102",1100,1200,45));
+////        tempCourses.add(new Course("D 100 102",1600,1900,3));
+////        tempCourses.add(new Course("D 200 102",1400,1900,24));
+////        tempCourses.add(new Course("D 300 102",1300,1500,1));
+////        tempCourses.add(new Course("D 400 102",100,200,145));
+////        tempCourses.add(new Course("E 100 102",400,500,3));
+////        tempCourses.add(new Course("E 200 102",530,630,24));
+////        tempCourses.add(new Course("E 300 102",730,830,345));
+////        tempCourses.add(new Course("E 400 102",800,900,24));
+//
+//        ArrayList<ArrayList<Course>> timetable;
+//        timetable = getValidTimeTable(tempCourses,2);
+//
+//        int cnt = 0;
+//        for (ArrayList<Course> courses : timetable) {
+//            for (Course course : courses) {
+//                System.out.println(course.toString());
+//            }
+//            cnt++;
+//            System.out.println("-------------------------");
+//        }
+//        long endTime = System.currentTimeMillis();
+//        System.out.println("The execution time is: " + (endTime - startTime) + "ms");
+//        System.out.println("There are " + cnt + "combinations");
+//    }
 }
