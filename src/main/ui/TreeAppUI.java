@@ -425,8 +425,8 @@ public class TreeAppUI {
         try {
             treeApp = jsonReader.read();
             System.out.println("Loaded successfully from previous saved data");
-            System.out.printf("!!!!!------Your remaining budget %d------!!!!!\n"
-                    + treeApp.getExpenseRecording().getBudget());
+            System.out.printf("!!!!!------Your remaining budget: "
+                    + treeApp.getExpenseRecording().getBudget() + "------!!!!!\n");
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }

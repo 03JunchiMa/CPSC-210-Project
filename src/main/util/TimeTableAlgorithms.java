@@ -43,7 +43,7 @@ public class TimeTableAlgorithms {
     }
 
     // MODOFIES: ArrayList<ArrayList<Course>>
-    // EFFECTS: search all the timetables
+    // EFFECTS: search all the valid timetables combinations
     public void searchTimeTables(ArrayList<Course> courseForSelection, int u, int n, int last) {
         if (currentCourses.size() + (courseForSelection.size() - last) < n) {
             return;
@@ -73,7 +73,7 @@ public class TimeTableAlgorithms {
 
     }
 
-    // EFFECTS: add a course to the timetable, so that the time slot is placed
+    // EFFECTS: add a course to the timetable
     private void addToTimeTable() {
         ArrayList<Course> tempCourses = new ArrayList<>();
         for (int i = 0; i < currentCourses.size(); i++) {
@@ -82,7 +82,8 @@ public class TimeTableAlgorithms {
         validTimeTable.add(tempCourses);
     }
 
-    public void addCourseToTimeTable(Course course,int c) {
+    // // EFFECTS: add a course to the timetable, so that the time slot is occupied
+    public void addCourseToTimeTable(Course course, int c) {
         int weekday = course.getWeekday();
         while (weekday > 0) {
             int day = weekday % 10;
@@ -157,7 +158,24 @@ public class TimeTableAlgorithms {
 
             }
         });
+        return courses;
+    }
 
+    // EFFECTS: sort Course by start time
+    public ArrayList<Course> sortCourseByStartTime(ArrayList<Course> tempCourses) {
+        ArrayList<Course> courses = new ArrayList<>();
+
+        for (int i = 0; i < tempCourses.size(); i++) {
+            courses.add(tempCourses.get(i));
+        }
+
+        Collections.sort(courses, new Comparator<Course>() {
+            @Override
+            public int compare(Course c1, Course c2) {
+                return c1.getStartTime() - c2.getStartTime();
+
+            }
+        });
         return courses;
     }
 
@@ -175,77 +193,37 @@ public class TimeTableAlgorithms {
         return courseNameSection.substring(lastSpace + 1);
     }
 
-//    // EFFECTS: return all the valid combinations of the timetable that have more lunchtime
-//    // this means between 11:00 to 13:00, you can have at least 1 hour for lunchtime.
-//    public ArrayList<ArrayList<Course>> getTimeTableCanHaveLunchTime(ArrayList<ArrayList<Course>> allCoursesComb) {
-//        ArrayList<ArrayList<Course>> timeTable;
-//        for (int i = 0; i < allCoursesComb.size(); i++) {
-//            ArrayList<Course> courses = allCoursesComb.get(i);
-//
-//            for (int j = 0; j < courses.size(); j++) {
-//
-//            }
-//        }
-//
-//        return timeTable;
-//    }
-
-    // EFFECTS: return the timetable that have the shortest distance between courses, this means this is the timetable
-    // that you have to walk the least between each courses
-    public ArrayList<ArrayList<Course>> getTimeTableShortestDistanceBetweenCourses(ArrayList<ArrayList<Course>>
-                                                                                           allCoursesComb) {
-        return null;
-        // stub
+    // EFFECTS: return all the valid combinations of the timetable that don't have any classes between the given
+    // time slot (this means in this time slot you are free)
+    public ArrayList<ArrayList<Course>> getTimeTableAvoidTimeSlot(ArrayList<ArrayList<Course>> allCoursesComb,
+                                                                  int startTime, int endTime) {
+        ArrayList<ArrayList<Course>> timeTableAvoidedTimeSlot = new ArrayList<>();
+        for (ArrayList<Course> courses : allCoursesComb) {
+            boolean check = true;
+            for (Course course : courses) {
+                int courseStart = course.getStartTime();
+                int courseEnd = course.getEndTime();
+                if (courseStart < startTime) {
+                    if (courseEnd > startTime && courseEnd < endTime) {
+                        check = false;
+                        break;
+                    }
+                } else if (courseStart < endTime) {
+                    check = false;
+                    break;
+                }
+            }
+            if (check) {
+                timeTableAvoidedTimeSlot.add(courses);
+            }
+        }
+        return timeTableAvoidedTimeSlot;
     }
 
-
-
-    // Temp test
-    @SuppressWarnings("methodlength")
-    public static void main(String[] args) {
-        ArrayList<Course> tempCourses = new ArrayList<>();
-
-        long startTime = System.currentTimeMillis();
-        tempCourses.add(new Course("CPSC 210 102",1300,1400,135));
-        tempCourses.add(new Course("CPSC 310 102",1500,1600,24));
-        tempCourses.add(new Course("CPSC 310 102",1400,1500,24));
-        tempCourses.add(new Course("CPSC 410 102",1500,1600,24));
-//        tempCourses.add(new Course("A 100 102",300,400,135));
-//        tempCourses.add(new Course("A 200 102",500,600,24));
-//        tempCourses.add(new Course("A 300 102",700,800,24));
-//        tempCourses.add(new Course("A 400 102",900,1000,24));
-//        tempCourses.add(new Course("B 100 102",300,400,3));
-//        tempCourses.add(new Course("B 200 102",500,600,2));
-//        tempCourses.add(new Course("B 300 102",700,800,1));
-//        tempCourses.add(new Course("B 400 102",900,1000,45));
-//        tempCourses.add(new Course("C 100 102",1700,1800,3));
-//        tempCourses.add(new Course("C 200 102",1800,1900,24));
-//        tempCourses.add(new Course("C 300 102",700,800,1));
-//        tempCourses.add(new Course("C 400 102",1100,1200,45));
-//        tempCourses.add(new Course("D 100 102",1600,1900,3));
-//        tempCourses.add(new Course("D 200 102",1400,1900,24));
-//        tempCourses.add(new Course("D 300 102",1300,1500,1));
-//        tempCourses.add(new Course("D 400 102",100,200,145));
-//        tempCourses.add(new Course("E 100 102",400,500,3));
-//        tempCourses.add(new Course("E 200 102",530,630,24));
-//        tempCourses.add(new Course("E 300 102",730,830,345));
-//        tempCourses.add(new Course("E 400 102",800,900,24));
-
-        TimeTableAlgorithms a = new TimeTableAlgorithms();
-        ArrayList<ArrayList<Course>> timetable;
-        timetable = a.getValidTimeTable(tempCourses,10);
-
-        int cnt = 0;
-        for (ArrayList<Course> courses : timetable) {
-            for (Course course : courses) {
-                System.out.println(course.toString());
-            }
-            cnt++;
-            System.out.println("-------------------------");
-        }
-        long endTime = System.currentTimeMillis();
-        System.out.println("The execution time is: " + (endTime - startTime) + "ms");
-        System.out.println("There are " + cnt + "combinations");
+    // EFFECTS: return all the valid combination of the timetable that can have lunchtime, which means there
+    // are no courses between 11:00 and 13:00
+    public ArrayList<ArrayList<Course>> getTimeTableForLunchTime(ArrayList<ArrayList<Course>> allCoursesComb) {
+        return getTimeTableAvoidTimeSlot(allCoursesComb,1100,1300);
     }
 
 }
