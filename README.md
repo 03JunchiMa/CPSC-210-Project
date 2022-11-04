@@ -35,3 +35,7 @@ try to interact with different things and see how the tree grows.
 > Phase 2
 - As a user, I want to be able to store the Expense information and the course information that I have entered. 
 - As a user, I want to be able to load the expense information and the course information that I entered previously.
+
+> Phase 3 
+> As a user, I want to be able to add and view the timetables in a graphical user interface
+> As a user, I want to be able to have the option to load and save files in a graphical user interface

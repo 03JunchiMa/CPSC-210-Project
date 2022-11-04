@@ -228,49 +228,4 @@ public class TimeTableAlgorithms {
         return getTimeTableAvoidTimeSlot(allCoursesComb,1100,1300);
     }
 
-//    @SuppressWarnings("methodlength")
-//    public static void main(String[] args) {
-//        ArrayList<Course> tempCourses = new ArrayList<>();
-//
-//        long startTime = System.currentTimeMillis();
-//        tempCourses.add(new Course("CPSC 210 102",1300,1400,135));
-//        tempCourses.add(new Course("CPSC 310 102",1500,1600,24));
-//        tempCourses.add(new Course("CPSC 310 102",1400,1500,24));
-//        tempCourses.add(new Course("CPSC 410 102",1500,1600,24));
-////        tempCourses.add(new Course("A 100 102",300,400,135));
-////        tempCourses.add(new Course("A 200 102",500,600,24));
-////        tempCourses.add(new Course("A 300 102",700,800,24));
-////        tempCourses.add(new Course("A 400 102",900,1000,24));
-////        tempCourses.add(new Course("B 100 102",300,400,3));
-////        tempCourses.add(new Course("B 200 102",500,600,2));
-////        tempCourses.add(new Course("B 300 102",700,800,1));
-////        tempCourses.add(new Course("B 400 102",900,1000,45));
-////        tempCourses.add(new Course("C 100 102",1700,1800,3));
-////        tempCourses.add(new Course("C 200 102",1800,1900,24));
-////        tempCourses.add(new Course("C 300 102",700,800,1));
-////        tempCourses.add(new Course("C 400 102",1100,1200,45));
-////        tempCourses.add(new Course("D 100 102",1600,1900,3));
-////        tempCourses.add(new Course("D 200 102",1400,1900,24));
-////        tempCourses.add(new Course("D 300 102",1300,1500,1));
-////        tempCourses.add(new Course("D 400 102",100,200,145));
-////        tempCourses.add(new Course("E 100 102",400,500,3));
-////        tempCourses.add(new Course("E 200 102",530,630,24));
-////        tempCourses.add(new Course("E 300 102",730,830,345));
-////        tempCourses.add(new Course("E 400 102",800,900,24));
-//
-//        ArrayList<ArrayList<Course>> timetable;
-//        timetable = getValidTimeTable(tempCourses,2);
-//
-//        int cnt = 0;
-//        for (ArrayList<Course> courses : timetable) {
-//            for (Course course : courses) {
-//                System.out.println(course.toString());
-//            }
-//            cnt++;
-//            System.out.println("-------------------------");
-//        }
-//        long endTime = System.currentTimeMillis();
-//        System.out.println("The execution time is: " + (endTime - startTime) + "ms");
-//        System.out.println("There are " + cnt + "combinations");
-//    }
 }
