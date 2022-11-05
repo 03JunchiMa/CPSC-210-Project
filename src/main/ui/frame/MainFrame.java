@@ -5,7 +5,6 @@ import ui.component.TopMenuBar;
 import ui.listener.SetThemeListener;
 
 import javax.swing.*;
-import javax.swing.plaf.multi.MultiLookAndFeel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -21,6 +20,7 @@ public class MainFrame extends JFrame {
     public MainFrame(String title) {
         super(title);
 
+        FlatLaf.setup(new FlatLightLaf());
         /*
         external library, set the look and feel
         */
