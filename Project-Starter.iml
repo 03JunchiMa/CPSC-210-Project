@@ -29,5 +29,7 @@
     </orderEntry>
     <orderEntry type="library" exported="" name="json-20210307" level="project" />
     <orderEntry type="library" exported="" name="flatlaf-2.6" level="project" />
+    <orderEntry type="library" name="svgSalamander-1.1.4" level="project" />
+    <orderEntry type="library" name="flatlaf-extras-2.6" level="project" />
   </component>
 </module>

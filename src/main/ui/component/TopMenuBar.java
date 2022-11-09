@@ -1,5 +1,7 @@
 package ui.component;
 
+import com.formdev.flatlaf.extras.FlatSVGIcon;
+import com.kitfox.svg.app.beans.SVGIcon;
 import ui.listener.SetThemeListener;
 
 import javax.swing.*;
