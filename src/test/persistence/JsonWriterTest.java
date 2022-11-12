@@ -57,7 +57,7 @@ public class JsonWriterTest extends JsonTest{
             checkIdQueryExpense(expectedIdQueryExpense,treeApp.getExpenseRecording().getIdQueryExpense());
 
             Operation expectedOperation = new Operation("undoTheLastOperation",new Expense(0,"null"));
-            expectedOperation.getExpense().setId(0);
+            expectedOperation.getExpense().setId(-1);
             checkLastOperation(expectedOperation,treeApp.getExpenseRecording().getLastOperation());
 
             assertEquals(1,treeApp.getExpenseRecording().getIdCounter());

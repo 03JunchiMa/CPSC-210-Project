@@ -1,20 +1,20 @@
 package ui.component;
 
 import com.formdev.flatlaf.extras.FlatSVGIcon;
-import com.kitfox.svg.app.beans.SVGIcon;
-import ui.listener.SetThemeListener;
 
 import javax.swing.*;
-import javax.swing.plaf.multi.MultiLookAndFeel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
 
 // The top menu bar, set
 public class TopMenuBar extends JMenuBar {
 
     private static JMenuItem setLightTheme;
     private static JMenuItem setDraculaTheme;
+    private static JMenu file;
+    private static JMenuItem synchronizeItem;
+    private static JMenuItem saveItem;
     private static TopMenuBar topMenuBar;
+    private static JMenu exitMenu;
 
     // private constructor, since top menu bar will be shared
     private TopMenuBar() {
@@ -35,35 +35,52 @@ public class TopMenuBar extends JMenuBar {
     // EFFECTS: add all the menus to the menu bar
     public static void init() {
 
+        // about menu
+        JMenu aboutMenu = new JMenu("About");
+        aboutMenu.setIcon(new ImageIcon("data/Icon/Tree Icon.png"));
+        topMenuBar.add(aboutMenu);
+
         // setting menu
         JMenu settingMenu = new JMenu("Setting");
         settingMenu.setIcon(new ImageIcon("data/Icon/Setting Icon.png"));
-        // add sub menu
-        setLightTheme = new JMenuItem("Light theme");
-        setDraculaTheme = new JMenuItem("Dracula theme");
-        settingMenu.add(setLightTheme);
-        settingMenu.add(setDraculaTheme);
-        topMenuBar.add(settingMenu);
 
-        // about menu
-        JMenu aboutMenu = new JMenu("About");
-        aboutMenu.setIcon(new ImageIcon("data/Icon/About Icon.png"));
-        topMenuBar.add(aboutMenu);
+        // add theme menu
+        initThemeMenu(settingMenu);
 
-        // synchronize menu
-        JMenu synchronizeMenu = new JMenu("Synchronize");
-        synchronizeMenu.setIcon(new ImageIcon("data/Icon/Synchronize Up.png"));
-        topMenuBar.add(synchronizeMenu);
-
-        // save menu
-        JMenu saveMenu = new JMenu("Save");
-        saveMenu.setIcon(new ImageIcon("data/Icon/Save Icon.png"));
-        topMenuBar.add(saveMenu);
+        // initialize the file menu
+        initFileMenu();
 
         // exit menu
-        JMenu exitMenu = new JMenu("Exit");
+        exitMenu = new JMenu("Exit");
         exitMenu.setIcon(new ImageIcon("data/Icon/Exit Icon.png"));
         topMenuBar.add(exitMenu);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: initialize the theme menu
+    private static void initThemeMenu(JMenu settingMenu) {
+        setLightTheme = new JRadioButtonMenuItem("Light theme",true);
+        setDraculaTheme = new JRadioButtonMenuItem("Dracula theme",false);
+        settingMenu.add(setLightTheme);
+        settingMenu.add(setDraculaTheme);
+        ButtonGroup themeGroup = new ButtonGroup();
+        themeGroup.add(setLightTheme);
+        themeGroup.add(setDraculaTheme);
+        topMenuBar.add(settingMenu);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: initialize the file menu
+    private static void initFileMenu() {
+        file = new JMenu("File");
+        file.setIcon(new ImageIcon("data/Icon/File Icon.png"));
+        synchronizeItem = new JRadioButtonMenuItem("Synchronize");
+        saveItem = new JRadioButtonMenuItem("Save");
+        synchronizeItem.setIcon(new ImageIcon("data/Icon/Synchronize Up Icon .png"));
+        saveItem.setIcon(new ImageIcon("data/Icon/Save Icon.png"));
+        file.add(synchronizeItem);
+        file.add(saveItem);
+        topMenuBar.add(file);
     }
 
     // EFFECTS: return getSetLightTheme
@@ -76,4 +93,18 @@ public class TopMenuBar extends JMenuBar {
         return setDraculaTheme;
     }
 
+    // EFFECTS: return file
+    public static JMenuItem getSynchronizeItem() {
+        return synchronizeItem;
+    }
+
+    // EFFECTS: return saveItem menu
+    public static JMenuItem getSaveItem() {
+        return saveItem;
+    }
+
+    // EFFECTS: return exit menu
+    public static JMenu getExitMenu() {
+        return exitMenu;
+    }
 }

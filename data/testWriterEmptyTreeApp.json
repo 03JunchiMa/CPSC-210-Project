@@ -7,7 +7,7 @@
             "Expense": {
                 "Category": "null",
                 "Amount": 0,
-                "Id": 0
+                "Id": -1
             }
         },
         "ExpenseIdList": [],
