@@ -9,7 +9,6 @@ import ui.component.LeftMenuItem;
 import ui.component.panel.ExpensePanel;
 import ui.component.panel.FractalTreePanel;
 import ui.component.TopMenuBar;
-import ui.component.panel.TimeTablePanel;
 import ui.dialog.ExitDialog;
 
 import javax.swing.*;
