@@ -25,6 +25,7 @@ public class PieChart extends JPanel {
             }
 
         });
+        this.setVisible(true);
     }
 
     // MODIFIES: this
@@ -119,9 +120,6 @@ public class PieChart extends JPanel {
         for (int i = 0; i < partList.size();i++) {
             Part p = partList.get(i);
             p.degree = (int) (360 * p.amount / totalAmount);
-            if (p.degree < 3) {
-                p.degree = 3; // 有的份额太少。是低分配3度角吧
-            }
             if (i == partList.size() - 1) {
                 p.degree = 360 - totalDegrees; // 确保占满360度
             }

@@ -250,9 +250,11 @@ public class MainFrame extends JFrame {
     public void loadTreeApp() {
         try {
             treeApp = jsonReader.read();
+            expensePanel.setExpenseRecording(treeApp.getExpenseRecording());
             System.out.println("Loaded successfully from previous saved data");
             System.out.printf("!!!!!------Your remaining budget: "
                     + treeApp.getExpenseRecording().getBudget() + " ------!!!!!\n");
+            expensePanel.loadData();
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }

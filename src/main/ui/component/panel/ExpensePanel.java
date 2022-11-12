@@ -12,9 +12,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 // The panel for recording and viewing expenses
 public class ExpensePanel extends JPanel {
+
+    private static final int P = (int)1e9 + 10;
 
     private MainFrame mainFrame;
     private PieChart pieChart;
@@ -48,8 +51,7 @@ public class ExpensePanel extends JPanel {
         pieChart = new PieChart();
         this.add(pieChart,BorderLayout.CENTER);
 
-        pieChart.addPart(100,"1",getColor());
-        pieChart.addPart(30,"2",getColor());
+        pieChart.addPart(1e-18,"1",getColor());
     }
 
     // MODIFIES: this
@@ -64,7 +66,7 @@ public class ExpensePanel extends JPanel {
 
     // EFFECTS: return the color corresponding to the
     public Color getColor() {
-        return null;
+        return new Color(255,255,255);
     }
 
     // MODIFIES: this
@@ -78,9 +80,27 @@ public class ExpensePanel extends JPanel {
                     Expense expense = expenseDialog.getEnteredExpense();
                     expenseRecording.addExpenseInfo(expense);
                     expenseTable.addRow(expense);
+                    drawPieChart();
                 }
             }
         });
+    }
+
+    // EFFECTS: return the positive int mod by rgb
+    private int toPositiveIntByRGB(int x, int mod) {
+        return ((x % mod) + mod) % mod;
+    }
+
+    // EFFECTS: draw the pie chart according to the category cost
+    private void drawPieChart() {
+        pieChart.repaint();
+        for (Map.Entry<String,Integer> entry : expenseRecording.getCategoryCost().entrySet()) {
+            int r = toPositiveIntByRGB((int)(Math.random() * 1000),255);
+            int g = toPositiveIntByRGB((int)(Math.random() * 1000),255);
+            int b = toPositiveIntByRGB((int)(Math.random() * 1000),255);
+            pieChart.addPart(toPositiveIntByRGB(entry.getValue(),P),entry.getKey(),new Color(r,g,b));
+        }
+        pieChart.repaint();
     }
 
     // MODIFIES: this
@@ -93,6 +113,21 @@ public class ExpensePanel extends JPanel {
     // EFFECTS: set the expense recording
     public void setExpenseRecording(ExpenseRecording expenseRecording) {
         this.expenseRecording = expenseRecording;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: load the data, and redraw the corresponding items in the expense panel
+    public void loadData() {
+        try {
+            for (int id : expenseRecording.getExpenseIdList()) {
+                Expense expense = expenseRecording.getInfoById(id);
+                String category = expense.getCategory();
+                expenseTable.addRow(expense);
+                drawPieChart();
+            }
+        } catch (Exception e) {
+            System.out.println("Exception when load the data in expense panel");
+        }
     }
 
 }

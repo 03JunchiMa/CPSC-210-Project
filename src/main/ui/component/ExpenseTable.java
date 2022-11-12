@@ -16,6 +16,7 @@ import java.util.Vector;
 // The customized table for recording expense
 public class ExpenseTable extends JTable {
 
+    private JButton addButton;
     private JPopupMenu popupMenu;
     private JMenuItem item;
     private DefaultTableModel model = new DefaultTableModel();
