@@ -15,6 +15,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// The upper left panel for the timetable
 public class TimeTableUpperLeftPanel extends JPanel {
 
     private MainFrame mainFrame;
@@ -22,6 +23,7 @@ public class TimeTableUpperLeftPanel extends JPanel {
     private AddButton upperLeftButton;
     private CourseTable courseTable;
 
+    // EFFECTS: initialize the upper left panel of the time table panel
     public TimeTableUpperLeftPanel(MainFrame mainFrame, TimeTable timeTable) {
         this.mainFrame = mainFrame;
         this.timeTable = timeTable;
