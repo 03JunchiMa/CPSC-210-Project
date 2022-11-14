@@ -1,10 +1,7 @@
 package ui.component.panel;
 
-import af.swing.layout.VLayout;
 import model.Course;
-import model.Expense;
 import model.TimeTable;
-import ui.Main;
 import ui.component.button.AddButton;
 import ui.component.table.CourseTable;
 import ui.dialog.AddCourseDialog;
@@ -18,10 +15,10 @@ import java.awt.event.ActionListener;
 // The upper left panel for the timetable
 public class TimeTableUpperLeftPanel extends JPanel {
 
-    private MainFrame mainFrame;
-    private TimeTable timeTable;
-    private AddButton upperLeftButton;
-    private CourseTable courseTable;
+    protected MainFrame mainFrame;
+    protected TimeTable timeTable;
+    protected AddButton upperLeftButton;
+    protected CourseTable courseTable;
 
     // EFFECTS: initialize the upper left panel of the time table panel
     public TimeTableUpperLeftPanel(MainFrame mainFrame, TimeTable timeTable) {
@@ -36,7 +33,7 @@ public class TimeTableUpperLeftPanel extends JPanel {
     // EFFECTS: initialize the upper left panel
     public void initUpperLeftPanel() {
         this.setLayout(new BorderLayout());
-        initUpperLeftButton();
+        initButton();
     }
 
     // MODIFIES: this
@@ -51,7 +48,7 @@ public class TimeTableUpperLeftPanel extends JPanel {
 
     // MODIFIES: this
     // EFFECTS: initialize the upper left upperLeftButton
-    public void initUpperLeftButton() {
+    protected void initButton() {
         upperLeftButton = new AddButton(("Add the course"));
         upperLeftButton.setSize(30,30);
         this.add(upperLeftButton,BorderLayout.NORTH);
@@ -60,7 +57,7 @@ public class TimeTableUpperLeftPanel extends JPanel {
 
     // MODIFIES: this
     // EFFECTS: add the action listener to the upper left button
-    public void addListener() {
+    protected void addListener() {
         upperLeftButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

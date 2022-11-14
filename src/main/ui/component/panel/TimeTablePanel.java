@@ -30,7 +30,7 @@ public class TimeTablePanel extends JPanel {
         this.setLayout(new GridLayout(2,2));
 
         upperLeftPanel = new TimeTableUpperLeftPanel(mainFrame,timeTable);
-        initUpperRightPanel();
+        upperRightPanel = new TimeTableUpperRightPanel(mainFrame,timeTable);
         initLowerLeftPanel();
         initLowerRightPanel();
 

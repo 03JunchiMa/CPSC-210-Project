@@ -44,10 +44,10 @@ public class CourseTable extends DataTable {
     // EFFECTS: delete the corresponding row data in the model
     @Override
     protected void deleteRowData(int row) {
-        String courseNameSection = this.getValueAt(row,0).toString() + " " + this.getValueAt(row,1).toString();
-        int startTime = getTime(this.getValueAt(row,2).toString());
-        int endTime = getTime(this.getValueAt(row,3).toString());
-        int weekday = getTime(this.getValueAt(row,4).toString());
+        String courseNameSection = this.getValueAt(row,0).toString();
+        int startTime = getTime(this.getValueAt(row,1).toString());
+        int endTime = getTime(this.getValueAt(row,2).toString());
+        int weekday = getTime(this.getValueAt(row,3).toString());
         Course course = new Course(courseNameSection,startTime,endTime,weekday);
         timeTable.deleteIntendedCourse(course);
     }
