@@ -1,10 +1,9 @@
-package ui.component;
+package ui.component.table;
 
 import model.Expense;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -13,16 +12,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
 
-// The customized table for recording expense
-public class ExpenseTable extends JTable {
+public abstract class DataTable extends JTable {
 
     private JButton addButton;
-    private JPopupMenu popupMenu;
-    private JMenuItem item;
-    private DefaultTableModel model = new DefaultTableModel();
+    protected JPopupMenu popupMenu;
+    protected JMenuItem item;
+    protected DefaultTableModel model = new DefaultTableModel();
 
     // EFFECTS: initialize the customized table
-    public ExpenseTable() {
+    public DataTable() {
         initTable();
         addRightClickedListener();
     }
@@ -39,23 +37,22 @@ public class ExpenseTable extends JTable {
 
     // MODIFIES: this
     // EFFECTS: initialize the model
-    private void initModel() {
-        model.addColumn("Expense Amount");
-        model.addColumn("Category");
-        model.addColumn("id");
-        model.addColumn("Date");
-    }
+    protected abstract void initModel();
+//      model.addColumn("Expense Amount");
+//        model.addColumn("Category");
+//        model.addColumn("id");
+//        model.addColumn("Date");
 
     // MODIFIES: this
     // EFFECTS: add the corresponding data to row
-    public void addRow(Expense expense) {
-        Vector<Object> rowData = new Vector<>();
-        rowData.add(expense.getAmount());
-        rowData.add(expense.getCategory());
-        rowData.add(expense.getId());
-        rowData.add(getDate());
-        model.addRow(rowData);
-    }
+    public abstract void addRow(Object object);
+//        Vector<Object> rowData = new Vector<>();
+//        rowData.add(expense.getAmount());
+//        rowData.add(expense.getCategory());
+//        rowData.add(expense.getId());
+//        rowData.add(getDate());
+//        model.addRow(rowData);
+
 
     // EFFECTS: return the current date to string
     public String getDate() {
@@ -66,13 +63,18 @@ public class ExpenseTable extends JTable {
 
     // MODIFIES: this
     // EFFECTS: delete the selected row
-    private void deleteRow() {
+    protected void deleteRow() {
         int[] rows = this.getSelectedRows();
         for (int i = rows.length - 1; i >= 0; i--) {
             int index = rows[i];
+            deleteRowData(index);
             model.removeRow(index);
         }
     }
+
+    // MODIFIES: this
+    // EFFECTS: delete the row data in the model instead in the table
+    protected abstract void deleteRowData(int row);
 
     // MODIFIES: this
     // EFFECTS: pop up the delete menu

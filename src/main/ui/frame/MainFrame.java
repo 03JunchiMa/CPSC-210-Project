@@ -4,9 +4,10 @@ import com.formdev.flatlaf.*;
 import model.TreeApp;
 import persistence.JsonReader;
 import persistence.JsonWriter;
+import ui.component.panel.TimeTableUpperLeftPanel;
 import ui.component.renderer.LeftMenuCellRenderer;
 import ui.component.LeftMenuItem;
-import ui.component.panel.ExpensePanel;
+import ui.component.panel.ExpenseMainPanel;
 import ui.component.panel.FractalTreePanel;
 import ui.component.TopMenuBar;
 import ui.component.panel.TimeTablePanel;
@@ -36,7 +37,8 @@ public class MainFrame extends JFrame {
     private JList<LeftMenuItem> leftMenu = new JList<>();
     private JPanel container = new JPanel();
 
-    private ExpensePanel expensePanel;
+    private ExpenseMainPanel expenseMainPanel;
+    private TimeTablePanel timeTablePanel;
 
     private static TopMenuBar topMenuBar;
 
@@ -114,11 +116,13 @@ public class MainFrame extends JFrame {
 
         // add cards
         container.add(new FractalTreePanel(), "View 0");
-        expensePanel = new ExpensePanel();
-        container.add(expensePanel,"View 1");
-        expensePanel.setMainFrame(this);
-        expensePanel.setExpenseRecording(treeApp.getExpenseRecording());
-        container.add(new TimeTablePanel(),"View 2");
+
+        expenseMainPanel = new ExpenseMainPanel(treeApp.getExpenseRecording());
+        container.add(expenseMainPanel,"View 1");
+        expenseMainPanel.setMainFrame(this);
+
+        timeTablePanel = new TimeTablePanel(treeApp.getTimeTable(),this);
+        container.add(timeTablePanel,"View 2");
 
         // default view
         selectView(0);
@@ -250,11 +254,13 @@ public class MainFrame extends JFrame {
     public void loadTreeApp() {
         try {
             treeApp = jsonReader.read();
-            expensePanel.setExpenseRecording(treeApp.getExpenseRecording());
+            expenseMainPanel.setExpenseRecording(treeApp.getExpenseRecording());
+            timeTablePanel.getUpperLeftPanel().setTimeTable(treeApp.getTimeTable());
             System.out.println("Loaded successfully from previous saved data");
             System.out.printf("!!!!!------Your remaining budget: "
                     + treeApp.getExpenseRecording().getBudget() + " ------!!!!!\n");
-            expensePanel.loadData();
+            expenseMainPanel.loadData();
+            timeTablePanel.getUpperLeftPanel().loadData();
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }

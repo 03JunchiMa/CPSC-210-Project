@@ -1,5 +1,7 @@
 package ui.graph;
 
+import model.ExpenseRecording;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -14,6 +16,7 @@ import java.util.Random;
 // Class Reference: https://study.163.com/course/courseLearn.htm?courseId=1209013812#/learn/video?lessonId=1278565112&courseId=1209013812
 public class PieChart extends JPanel {
 
+    private ExpenseRecording expenseRecording;
     private List<Part> partList = new ArrayList<>();
     private PartClickedListener partClickedListener;
 
@@ -105,7 +108,7 @@ public class PieChart extends JPanel {
         calculatePart(totalAmount);
 
         Rectangle rect = new Rectangle(30,20,200,200);
-        rect.grow(-4,-4); // 往里缩一点
+        rect.grow(-4,-4);
 
         int start = 90;
         for (Part p : partList) {
@@ -121,7 +124,7 @@ public class PieChart extends JPanel {
             Part p = partList.get(i);
             p.degree = (int) (360 * p.amount / totalAmount);
             if (i == partList.size() - 1) {
-                p.degree = 360 - totalDegrees; // 确保占满360度
+                p.degree = 360 - totalDegrees;
             }
 
             totalDegrees += p.degree;

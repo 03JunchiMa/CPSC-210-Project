@@ -2,7 +2,7 @@ package ui.component.panel;
 
 import model.Expense;
 import model.ExpenseRecording;
-import ui.component.ExpenseTable;
+import ui.component.table.ExpenseTable;
 import ui.component.button.AddButton;
 import ui.dialog.AddExpenseDialog;
 import ui.frame.MainFrame;
@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
 import java.util.Map;
 
 // The panel for recording and viewing expenses
-public class ExpensePanel extends JPanel {
+public class ExpenseMainPanel extends JPanel {
 
     private static final int P = (int)1e9 + 10;
 
@@ -26,12 +26,13 @@ public class ExpensePanel extends JPanel {
     private AddButton addButton;
 
     // EFFECTS: initialize the expense panel
-    public ExpensePanel() {
+    public ExpenseMainPanel(ExpenseRecording expenseRecording) {
+        this.expenseRecording = expenseRecording;
         this.setLayout(new BorderLayout());
 
-        initPieChart();
         initExpenseTable();
         initButton();
+        initPieChart();
 
         this.setVisible(true);
     }
@@ -57,7 +58,7 @@ public class ExpensePanel extends JPanel {
     // MODIFIES: this
     // EFFECTS: initialize the expense table
     public void initExpenseTable() {
-        expenseTable = new ExpenseTable();
+        expenseTable = new ExpenseTable(expenseRecording);
         this.add(expenseTable,BorderLayout.WEST);
 
         JScrollPane scrollPane = new JScrollPane(expenseTable);
@@ -76,8 +77,8 @@ public class ExpensePanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 AddExpenseDialog expenseDialog = new AddExpenseDialog(mainFrame);
-                if (expenseDialog.exec()) {
-                    Expense expense = expenseDialog.getEnteredExpense();
+                if (expenseDialog.exec("Expense")) {
+                    Expense expense = expenseDialog.getEnteredValue();
                     expenseRecording.addExpenseInfo(expense);
                     expenseTable.addRow(expense);
                     drawPieChart();
@@ -121,7 +122,6 @@ public class ExpensePanel extends JPanel {
         try {
             for (int id : expenseRecording.getExpenseIdList()) {
                 Expense expense = expenseRecording.getInfoById(id);
-                String category = expense.getCategory();
                 expenseTable.addRow(expense);
                 drawPieChart();
             }
