@@ -49,6 +49,8 @@ public class CancelButton extends JButton {
 
             @Override
             public void mouseEntered(MouseEvent e) {
+                setBackground(new Color(44,102,210));
+                saveButton.setBackground(new Color(101,101,101));
             }
 
             @Override

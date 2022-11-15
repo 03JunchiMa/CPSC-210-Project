@@ -37,6 +37,7 @@ public class TimeTableAlgorithmsTest {
         Course course2 = new Course("CPSC 310 102",1500,1600,24);
         Course course3 = new Course("CPSC 310 102",1400,1500,24);
         Course course4 = new Course("CPSC 410 102",1500,1600,24);
+        Course course5 = new Course("CPSC 210 102",1300,1400,135);
 
 
         timeTable.addIntendedCourse(course1);
@@ -62,6 +63,8 @@ public class TimeTableAlgorithmsTest {
         assertEquals(course3,courses4.get(0));
         assertEquals(course4,courses3.get(1));
 
+        timeTable.addIntendedCourse(course5);
+
         assertEquals(4,validTimeTable.size());
     }
 
@@ -71,6 +74,7 @@ public class TimeTableAlgorithmsTest {
         timeTable.addIntendedCourse(new Course("B 100 100", 1300,1400,135));
         timeTable.addIntendedCourse(new Course("C 100 100", 1200,1400,135));
         timeTable.addIntendedCourse(new Course("D 100 100", 1000,1130,135));
+        timeTable.addIntendedCourse(new Course("E 100 100", 1230,1330,135));
         ArrayList<ArrayList<Course>> validTimeTable = getTimeTableForLunchTime(getValidTimeTable(timeTable.getTimetable(),1));
         assertEquals(1,validTimeTable.size());
     }

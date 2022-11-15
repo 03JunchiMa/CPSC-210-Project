@@ -262,9 +262,6 @@ public class MainFrame extends JFrame {
             timeTablePanel.getUpperLeftPanel().setTimeTable(treeApp.getTimeTable());
             timeTablePanel.getUpperLeftPanel().getCourseTable().setTimeTable(treeApp.getTimeTable());
 
-            System.out.println("In the main panel: " + treeApp.getTimeTable().getTimetable().size());
-            System.out.println("In the main panel: " + treeApp.getTimeTable().toString());
-
             System.out.println("Loaded successfully from previous saved data");
             System.out.printf("!!!!!------Your remaining budget: "
                     + treeApp.getExpenseRecording().getBudget() + " ------!!!!!\n");
