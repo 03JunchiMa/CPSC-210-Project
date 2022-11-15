@@ -76,8 +76,8 @@ public class TimeTableAlgorithmsTest {
         timeTable.addIntendedCourse(new Course("D 100 100", 1000,1130,135));
         timeTable.addIntendedCourse(new Course("E 100 100", 900,1230,135));
         timeTable.addIntendedCourse(new Course("E 100 100", 900,1230,135));
-        ArrayList<ArrayList<Course>> validTimeTable = getTimeTableForLunchTime(getValidTimeTable(timeTable.getTimetable(),2));
-        assertEquals(0,validTimeTable.size());
+        ArrayList<ArrayList<Course>> validTimeTable = getTimeTableForLunchTime(getValidTimeTable(timeTable.getTimetable(),1));
+        assertEquals(1,validTimeTable.size());
     }
 
 
