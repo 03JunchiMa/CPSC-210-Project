@@ -70,13 +70,14 @@ public class TimeTableAlgorithmsTest {
 
     @Test
     void testGetTimeTableForLunchTime(){
-        timeTable.addIntendedCourse(new Course("A 100 100", 1200,1300,135));
-        timeTable.addIntendedCourse(new Course("B 100 100", 1300,1400,135));
+        timeTable.addIntendedCourse(new Course("A 100 100", 1200,1300,13));
+        timeTable.addIntendedCourse(new Course("B 100 100", 1300,1400,24));
         timeTable.addIntendedCourse(new Course("C 100 100", 1200,1400,135));
         timeTable.addIntendedCourse(new Course("D 100 100", 1000,1130,135));
-        timeTable.addIntendedCourse(new Course("E 100 100", 1130,1230,135));
-        ArrayList<ArrayList<Course>> validTimeTable = getTimeTableForLunchTime(getValidTimeTable(timeTable.getTimetable(),1));
-        assertEquals(1,validTimeTable.size());
+        timeTable.addIntendedCourse(new Course("E 100 100", 900,1230,135));
+        timeTable.addIntendedCourse(new Course("E 100 100", 900,1230,135));
+        ArrayList<ArrayList<Course>> validTimeTable = getTimeTableForLunchTime(getValidTimeTable(timeTable.getTimetable(),2));
+        assertEquals(0,validTimeTable.size());
     }
 
 
