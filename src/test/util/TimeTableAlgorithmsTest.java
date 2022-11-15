@@ -44,6 +44,7 @@ public class TimeTableAlgorithmsTest {
         timeTable.addIntendedCourse(course2);
         timeTable.addIntendedCourse(course3);
         timeTable.addIntendedCourse(course4);
+        timeTable.addIntendedCourse(course5);
 
         ArrayList<ArrayList<Course>> validTimeTable = getValidTimeTable(timeTable.getTimetable(),2);
 
@@ -63,7 +64,6 @@ public class TimeTableAlgorithmsTest {
         assertEquals(course3,courses4.get(0));
         assertEquals(course4,courses3.get(1));
 
-        timeTable.addIntendedCourse(course5);
 
         assertEquals(4,validTimeTable.size());
     }
