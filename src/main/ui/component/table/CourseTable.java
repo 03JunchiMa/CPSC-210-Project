@@ -49,7 +49,13 @@ public class CourseTable extends DataTable {
         int endTime = getTime(this.getValueAt(row,2).toString());
         int weekday = getTime(this.getValueAt(row,3).toString());
         Course course = new Course(courseNameSection,startTime,endTime,weekday);
-        timeTable.deleteIntendedCourse(course);
+
+        for (int i = 0; i < timeTable.getTimetable().size(); i++) {
+            if (timeTable.getTimetable().get(i).toString().equals(course.toString())) {
+                timeTable.getTimetable().remove(i);
+            }
+        }
+
     }
 
     // EFFECTS: return the string representation of the time
@@ -79,5 +85,12 @@ public class CourseTable extends DataTable {
         }
         return time;
     }
+
+    // MODIFIES: this
+    // EFFECTS: set the timetable
+    public void setTimeTable(TimeTable other) {
+        this.timeTable = other;
+    }
+
 
 }

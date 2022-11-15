@@ -241,6 +241,7 @@ public class MainFrame extends JFrame {
     public void saveTreeApp() {
         try {
             jsonWriter.open();;
+            System.out.println("In the main panel in saveTreeApp(): " + treeApp.getTimeTable().toString());
             jsonWriter.write(treeApp);
             jsonWriter.close();
             System.out.println("Saved the data to " + JSON_STORE);
@@ -260,6 +261,10 @@ public class MainFrame extends JFrame {
 
             timeTablePanel.setTimeTable(treeApp.getTimeTable());
             timeTablePanel.getUpperLeftPanel().setTimeTable(treeApp.getTimeTable());
+            timeTablePanel.getUpperLeftPanel().getCourseTable().setTimeTable(treeApp.getTimeTable());
+
+            System.out.println("In the main panel: " + treeApp.getTimeTable().getTimetable().size());
+            System.out.println("In the main panel: " + treeApp.getTimeTable().toString());
 
             System.out.println("Loaded successfully from previous saved data");
             System.out.printf("!!!!!------Your remaining budget: "
