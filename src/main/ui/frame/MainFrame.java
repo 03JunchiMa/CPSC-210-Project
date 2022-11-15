@@ -241,7 +241,6 @@ public class MainFrame extends JFrame {
     public void saveTreeApp() {
         try {
             jsonWriter.open();;
-            System.out.println("In the main panel in saveTreeApp(): " + treeApp.getTimeTable().toString());
             jsonWriter.write(treeApp);
             jsonWriter.close();
             System.out.println("Saved the data to " + JSON_STORE);

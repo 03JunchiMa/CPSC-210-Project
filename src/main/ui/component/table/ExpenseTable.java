@@ -55,10 +55,7 @@ public class ExpenseTable extends DataTable {
     @Override
     public void deleteRowData(int row) {
         int id = Integer.parseInt(this.getValueAt(row,2).toString());
-        System.out.println("In the expense table: " + id);
-        System.out.println("In the expense table: expense recording: " + expenseRecording.getExpenseIdList().toString());
         expenseRecording.deleteExpenseInfo(id);
-        System.out.println("deleted");
     }
 
     // MODIFIES: this
