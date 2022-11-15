@@ -23,6 +23,7 @@ public class ExpenseTable extends DataTable {
     public ExpenseTable(ExpenseRecording expenseRecording) {
         super();
         this.expenseRecording = expenseRecording;
+        System.out.println(expenseRecording.getExpenseIdList().toString());
     }
 
     // MODIFIES: this
@@ -46,6 +47,7 @@ public class ExpenseTable extends DataTable {
         rowData.add(expense.getId());
         rowData.add(getDate());
         model.addRow(rowData);
+        System.out.println("added");
     }
 
     // MODIFIES: super
@@ -53,9 +55,16 @@ public class ExpenseTable extends DataTable {
     @Override
     public void deleteRowData(int row) {
         int id = Integer.parseInt(this.getValueAt(row,2).toString());
-        if (expenseRecording.getExpenseIdList().contains(id)) {
-            expenseRecording.deleteExpenseInfo(id);
-        }
+        System.out.println("In the expense table: " + id);
+        System.out.println("In the expense table: expense recording: " + expenseRecording.getExpenseIdList().toString());
+        expenseRecording.deleteExpenseInfo(id);
+        System.out.println("deleted");
+    }
+
+    // MODIFIES: this
+    // EFFECTS: set the expense recording:
+    public void setExpenseRecording(ExpenseRecording other) {
+        this.expenseRecording = other;
     }
 
 }

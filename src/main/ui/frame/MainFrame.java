@@ -117,11 +117,11 @@ public class MainFrame extends JFrame {
         // add cards
         container.add(new FractalTreePanel(), "View 0");
 
-        expenseMainPanel = new ExpenseMainPanel(treeApp.getExpenseRecording());
+        expenseMainPanel = new ExpenseMainPanel(treeApp);
         container.add(expenseMainPanel,"View 1");
         expenseMainPanel.setMainFrame(this);
 
-        timeTablePanel = new TimeTablePanel(treeApp.getTimeTable(),this);
+        timeTablePanel = new TimeTablePanel(treeApp,this);
         container.add(timeTablePanel,"View 2");
 
         // default view
@@ -208,7 +208,7 @@ public class MainFrame extends JFrame {
         TopMenuBar.getExitMenu().addMenuListener(new MenuListener() {
             @Override
             public void menuSelected(MenuEvent e) {
-                ExitDialog exitDialog = new ExitDialog(MainFrame.this);
+                new ExitDialog(MainFrame.this);
             }
 
             @Override
@@ -254,16 +254,23 @@ public class MainFrame extends JFrame {
     public void loadTreeApp() {
         try {
             treeApp = jsonReader.read();
+
             expenseMainPanel.setExpenseRecording(treeApp.getExpenseRecording());
+            expenseMainPanel.getExpenseTable().setExpenseRecording(treeApp.getExpenseRecording());
+
+            timeTablePanel.setTimeTable(treeApp.getTimeTable());
             timeTablePanel.getUpperLeftPanel().setTimeTable(treeApp.getTimeTable());
+
             System.out.println("Loaded successfully from previous saved data");
             System.out.printf("!!!!!------Your remaining budget: "
                     + treeApp.getExpenseRecording().getBudget() + " ------!!!!!\n");
+
             expenseMainPanel.loadData();
-            timeTablePanel.getUpperLeftPanel().loadData();
+            timeTablePanel.loadData();
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
+
 
 }

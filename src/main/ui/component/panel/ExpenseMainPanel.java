@@ -2,6 +2,7 @@ package ui.component.panel;
 
 import model.Expense;
 import model.ExpenseRecording;
+import model.TreeApp;
 import ui.component.table.ExpenseTable;
 import ui.component.button.AddButton;
 import ui.dialog.AddExpenseDialog;
@@ -22,12 +23,12 @@ public class ExpenseMainPanel extends JPanel {
     private MainFrame mainFrame;
     private PieChart pieChart;
     private ExpenseTable expenseTable;
-    private ExpenseRecording expenseRecording;
+    private TreeApp treeApp;
     private AddButton addButton;
 
     // EFFECTS: initialize the expense panel
-    public ExpenseMainPanel(ExpenseRecording expenseRecording) {
-        this.expenseRecording = expenseRecording;
+    public ExpenseMainPanel(TreeApp treeApp) {
+        this.treeApp = treeApp;
         this.setLayout(new BorderLayout());
 
         initExpenseTable();
@@ -58,7 +59,7 @@ public class ExpenseMainPanel extends JPanel {
     // MODIFIES: this
     // EFFECTS: initialize the expense table
     public void initExpenseTable() {
-        expenseTable = new ExpenseTable(expenseRecording);
+        expenseTable = new ExpenseTable(treeApp.getExpenseRecording());
         this.add(expenseTable,BorderLayout.WEST);
 
         JScrollPane scrollPane = new JScrollPane(expenseTable);
@@ -79,7 +80,7 @@ public class ExpenseMainPanel extends JPanel {
                 AddExpenseDialog expenseDialog = new AddExpenseDialog(mainFrame);
                 if (expenseDialog.exec("Expense")) {
                     Expense expense = expenseDialog.getEnteredValue();
-                    expenseRecording.addExpenseInfo(expense);
+                    treeApp.getExpenseRecording().addExpenseInfo(expense);
                     expenseTable.addRow(expense);
                     drawPieChart();
                 }
@@ -95,7 +96,7 @@ public class ExpenseMainPanel extends JPanel {
     // EFFECTS: draw the pie chart according to the category cost
     private void drawPieChart() {
         pieChart.repaint();
-        for (Map.Entry<String,Integer> entry : expenseRecording.getCategoryCost().entrySet()) {
+        for (Map.Entry<String,Integer> entry : treeApp.getExpenseRecording().getCategoryCost().entrySet()) {
             int r = toPositiveIntByRGB((int)(Math.random() * 1000),255);
             int g = toPositiveIntByRGB((int)(Math.random() * 1000),255);
             int b = toPositiveIntByRGB((int)(Math.random() * 1000),255);
@@ -113,15 +114,15 @@ public class ExpenseMainPanel extends JPanel {
     // MODIFIES: this
     // EFFECTS: set the expense recording
     public void setExpenseRecording(ExpenseRecording expenseRecording) {
-        this.expenseRecording = expenseRecording;
+        this.treeApp.setExpenseRecording(expenseRecording);
     }
 
     // MODIFIES: this
     // EFFECTS: load the data, and redraw the corresponding items in the expense panel
     public void loadData() {
         try {
-            for (int id : expenseRecording.getExpenseIdList()) {
-                Expense expense = expenseRecording.getInfoById(id);
+            for (int id : treeApp.getExpenseRecording().getExpenseIdList()) {
+                Expense expense = treeApp.getExpenseRecording().getInfoById(id);
                 expenseTable.addRow(expense);
                 drawPieChart();
             }
@@ -130,4 +131,8 @@ public class ExpenseMainPanel extends JPanel {
         }
     }
 
+    // EFFECTS: return expense table;
+    public ExpenseTable getExpenseTable() {
+        return this.expenseTable;
+    }
 }

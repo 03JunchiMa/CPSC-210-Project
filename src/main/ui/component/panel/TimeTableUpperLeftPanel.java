@@ -71,22 +71,13 @@ public class TimeTableUpperLeftPanel extends JPanel {
         });
     }
 
-    // MODIFIES: this
-    // EFFECTS: reload the course data into the table
-    public void loadData() {
-        try {
-            for (Course course : timeTable.getTimetable()) {
-                courseTable.addRow(course);
-                System.out.println(course.getCourseNameSection() + " added");
-            }
-        } catch (Exception e) {
-            System.out.println("Exception when load the data in expense panel");
-        }
-    }
-
     // EFFECTS: set up the timetable
     public void setTimeTable(TimeTable timeTable) {
         this.timeTable = timeTable;
     }
 
+    // EFFECTS: return the course table
+    public CourseTable getCourseTable() {
+        return courseTable;
+    }
 }

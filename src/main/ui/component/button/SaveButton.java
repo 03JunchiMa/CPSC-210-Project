@@ -29,14 +29,6 @@ public class SaveButton extends JButton {
     // EFFECTS: add the listener to this
     private void addListener() {
         this.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                exitDialog.getMainFrame().saveTreeApp();
-                exitDialog.setVisible(false);
-                exitDialog.getMainFrame().setVisible(false);
-                System.exit(0);
-            }
-
 
             @Override
             public void mouseReleased(MouseEvent e) {

@@ -1,7 +1,10 @@
 package ui.component.panel;
 
+import model.Course;
 import model.TimeTable;
+import model.TreeApp;
 import ui.component.button.AddButton;
+import ui.component.table.CourseTable;
 import ui.dialog.AddCourseDialog;
 import ui.frame.MainFrame;
 
@@ -14,7 +17,7 @@ import java.awt.event.ActionListener;
 public class TimeTablePanel extends JPanel {
 
     private MainFrame mainFrame;
-    private TimeTable timeTable;
+    private TreeApp treeApp;
     private TimeTableUpperLeftPanel upperLeftPanel;
     private JPanel upperRightPanel;
     private JPanel lowerLeftPanel;
@@ -22,15 +25,15 @@ public class TimeTablePanel extends JPanel {
     private AddButton upperLeftButton;
 
     // EFFECTS: initialize the timetable panel
-    public TimeTablePanel(TimeTable timeTable, MainFrame mainFrame) {
+    public TimeTablePanel(TreeApp treeApp, MainFrame mainFrame) {
 
-        this.timeTable = timeTable;
+        this.treeApp = treeApp;
         this.mainFrame = mainFrame;
 
         this.setLayout(new GridLayout(2,2));
 
-        upperLeftPanel = new TimeTableUpperLeftPanel(mainFrame,timeTable);
-        upperRightPanel = new TimeTableUpperRightPanel(mainFrame,timeTable);
+        upperLeftPanel = new TimeTableUpperLeftPanel(mainFrame,treeApp.getTimeTable());
+        upperRightPanel = new TimeTableUpperRightPanel(mainFrame,treeApp.getTimeTable());
         initLowerLeftPanel();
         initLowerRightPanel();
 
@@ -73,14 +76,32 @@ public class TimeTablePanel extends JPanel {
         this.mainFrame = mainFrame;
     }
 
-    // MODIFIES: this
-    // EFFECTS: set up the timetable
-    public void setTimeTable(TimeTable timeTable) {
-        this.timeTable = timeTable;
-    }
 
     // EFFECTS: return the upper left panel
     public TimeTableUpperLeftPanel getUpperLeftPanel() {
         return this.upperLeftPanel;
     }
+
+    // MODIFIES: this
+    // EFFECTS: reload the course data into the table
+    public void loadData() {
+        try {
+            for (Course course : treeApp.getTimeTable().getTimetable()) {
+                upperLeftPanel.getCourseTable().addRow(course);
+                System.out.println(course.getCourseNameSection() + " added");
+            }
+        } catch (Exception e) {
+            System.out.println("Exception when load the data in expense panel");
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: set the timetable
+    public void setTimeTable(TimeTable other) {
+        this.treeApp.setTimetable(other);
+    }
+
+
+
+
 }
