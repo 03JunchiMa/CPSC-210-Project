@@ -39,3 +39,13 @@ try to interact with different things and see how the tree grows.
 > Phase 3 
 - As a user, I want to be able to add and view the timetables in a graphical user interface 
 - As a user, I want to be able to have the option to load and save files in a graphical user interface
+
+# Phase 3 instructions for grader
+- You can add the expense by first selecting the expense page in the left bar, and then click on the add button to add it.
+- You can also add the course by first selecting the timetable page, then click on the add button to add it.
+- You can locate my visual component in the main page (the tree, the menu bar, and the setting), in the expense page (pie graph), in the timetable page.
+- You can save the state of my application by either selecting the file (manually save), or by selecting exit (there will be dialog for asking whether you want to save your progress or not)
+- You can reload the state of your application by selecting synchronize in the setting (menu bar)
+- You can also delete the entry that you added in the expense page or course page by right click (there will be the deletion pop up menu)
+- You can change the appearance of the application by selecting different look and feel in the setting menu
+- You can generate the valid timetable by clicking on the button "Generate valid timetables" in the timetable page after you adding the course

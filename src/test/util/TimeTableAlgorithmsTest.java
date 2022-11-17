@@ -13,10 +13,12 @@ import static util.TimeTableAlgorithms.*;
 
 public class TimeTableAlgorithmsTest {
     TimeTable timeTable;
+    TimeTableAlgorithms timeTableAlgorithms;
 
     @BeforeEach
     void runBefore() {
         timeTable = new TimeTable();
+        timeTableAlgorithms = new TimeTableAlgorithms();
 
     }
 
