@@ -206,7 +206,7 @@ public class TimeTableAlgorithms {
                 int courseStart = course.getStartTime();
                 int courseEnd = course.getEndTime();
                 if (courseStart < startTime) {
-                    if (courseEnd > startTime && courseEnd < endTime) {
+                    if (courseEnd > startTime) {
                         check = false;
                         break;
                     }
