@@ -24,8 +24,10 @@ public class TimeTable implements Writable {
     // otherwise return false
     public boolean addIntendedCourse(Course course) {
         if (timetable.contains(course)) {
+            EventLog.getInstance().logEvent(new Event("Unsuccessful adding the course: " + course));
             return false;
         } else {
+            EventLog.getInstance().logEvent(new Event("Added course: " + course));
             timetable.add(course);
             return true;
         }
@@ -36,8 +38,10 @@ public class TimeTable implements Writable {
     // otherwise return false
     public boolean deleteIntendedCourse(Course course) {
         if (!timetable.contains(course)) {
+            EventLog.getInstance().logEvent(new Event("Unsuccessful deleting the course: " + course));
             return false;
         } else {
+            EventLog.getInstance().logEvent(new Event("Removed course: " + course));
             timetable.remove(course);
             return true;
         }

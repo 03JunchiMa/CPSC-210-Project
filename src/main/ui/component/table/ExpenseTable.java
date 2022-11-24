@@ -23,7 +23,6 @@ public class ExpenseTable extends DataTable {
     public ExpenseTable(ExpenseRecording expenseRecording) {
         super();
         this.expenseRecording = expenseRecording;
-        System.out.println(expenseRecording.getExpenseIdList().toString());
     }
 
     // MODIFIES: this
@@ -47,7 +46,6 @@ public class ExpenseTable extends DataTable {
         rowData.add(expense.getId());
         rowData.add(getDate());
         model.addRow(rowData);
-        System.out.println("added");
     }
 
     // MODIFIES: super

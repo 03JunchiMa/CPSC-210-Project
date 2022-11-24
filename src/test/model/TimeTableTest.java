@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -15,6 +16,42 @@ public class TimeTableTest {
     @BeforeEach
     void init(){
         table = new TimeTable();
+        EventLog.getInstance().clear();
+    }
+
+    @Test
+    void testEventLogAdd() {
+        Course course1 = new Course("CPSC 210 102",930,1130,24);
+        table.addIntendedCourse(course1);
+        table.addIntendedCourse(course1);
+
+        Iterator<Event> iterator = EventLog.getInstance().iterator();
+        iterator.next();
+        Event event1 = iterator.next();
+
+        assertEquals("Added course: " + course1,event1.getDescription());
+
+
+        Event event2 = iterator.next();
+        assertEquals("Unsuccessful adding the course: " + course1, event2.getDescription());
+    }
+
+    @Test
+    void testEventLogDelete() {
+        Course course1 = new Course("CPSC 210 102",930,1130,24);
+        table.addIntendedCourse(course1);
+        table.deleteIntendedCourse(course1);
+        table.deleteIntendedCourse(course1);
+
+        Iterator<Event> iterator = EventLog.getInstance().iterator();
+        iterator.next();
+        iterator.next();
+        Event event1 = iterator.next();
+        Event event2 = iterator.next();
+
+        assertEquals("Removed course: " + course1, event1.getDescription());
+        assertEquals("Unsuccessful deleting the course: " + course1, event2.getDescription());
+
     }
 
     @Test

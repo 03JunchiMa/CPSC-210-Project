@@ -65,6 +65,8 @@ public class ExpenseRecording implements Writable {
             categoryCost.put(expense.getCategory(), expense.getAmount());
         }
         lastOperation = new Operation("addExpenseInfo",expense);
+
+        EventLog.getInstance().logEvent(new Event("Added Expense Info: " + expense.toString()));
     }
 
     // MODIFIES: this
@@ -93,8 +95,12 @@ public class ExpenseRecording implements Writable {
             idQueryExpense.remove(id);
             expenseIdList.remove(position);
             lastOperation = new Operation("deleteExpenseInfo",expense);
+
+            EventLog.getInstance().logEvent(new Event("Deleted Expense Info: " + expense.toString()));
+
             return true;
         } else {
+            EventLog.getInstance().logEvent(new Event("Unsuccessful try of deleting Expense Info"));
             lastOperation = new Operation("undoTheLastOperation",null);
             return false;
         }

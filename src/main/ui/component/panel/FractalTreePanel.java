@@ -17,6 +17,7 @@ public class FractalTreePanel extends JPanel {
         if (depth == 0) {
             return;
         }
+
         int x2 = x1 + (int) (Math.cos(Math.toRadians(angle)) * depth * 10.0);
         //Math.toRadians,radian=degrees/π
         int y2 = y1 + (int) (Math.sin(Math.toRadians(angle)) * depth * 10.0);

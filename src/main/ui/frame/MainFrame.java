@@ -1,6 +1,8 @@
 package ui.frame;
 
 import com.formdev.flatlaf.*;
+import model.Event;
+import model.EventLog;
 import model.TreeApp;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -23,6 +25,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Iterator;
 
 
 // the main frame for the treeApp
@@ -244,8 +247,19 @@ public class MainFrame extends JFrame {
             jsonWriter.write(treeApp);
             jsonWriter.close();
             System.out.println("Saved the data to " + JSON_STORE);
+            printEventLog();
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // EFFECTS: print the event log
+    public void printEventLog() {
+        Iterator<model.Event> iterator = EventLog.getInstance().iterator();
+        System.out.println("Event Log: ");
+        while (iterator.hasNext()) {
+            Event event = iterator.next();
+            System.out.println(">>>\t" + event.getDate() + ": " + event.getDescription() + "\t<<<");
         }
     }
 
