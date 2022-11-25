@@ -77,6 +77,7 @@ public class ExpenseRecordingTest {
         assertFalse(event2.equals(event3));
         assertFalse(event2.equals(new Integer(a)));
         assertFalse(event1.hashCode() == event2.hashCode());
+        assertTrue(event2.equals(event2));
     }
 
 
