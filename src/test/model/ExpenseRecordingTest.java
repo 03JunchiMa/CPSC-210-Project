@@ -67,9 +67,16 @@ public class ExpenseRecordingTest {
 
         Event event1 = iterator.next();
         Event event2 = iterator.next();
+        Event event3 = null;
+        int a = 1;
 
         assertEquals("Unsuccessful try of deleting Expense Info", event1.getDescription());
         assertEquals("Deleted Expense Info: " + expense.toString(), event2.getDescription());
+        assertEquals(event1.getDate().toString(), event2.getDate().toString());
+        assertEquals(event2.getDate().toString() + "\n" + event1.getDescription(),event1.toString());
+        assertFalse(event2.equals(event3));
+        assertFalse(event2.equals(new Integer(a)));
+        assertFalse(event1.hashCode() == event2.hashCode());
     }
 
 
