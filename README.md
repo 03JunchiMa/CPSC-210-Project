@@ -50,6 +50,17 @@ try to interact with different things and see how the tree grows.
 - You can change the appearance of the application by selecting different look and feel in the setting menu
 - You can generate the valid timetable by clicking on the button "Generate valid timetables" in the timetable page after you adding the course
 
+# Phase 4: Task 2
+
+Representative event log
+1. Sun Nov 27 10:09:16 PST 2022: Added Expense Info: -100 education 1
+2. Sun Nov 27 10:09:22 PST 2022: Added course: CPSC 210 102800900135
+3. Sun Nov 27 10:09:51 PST 2022: Deleted Expense Info: -100 education 1
+4. Sun Nov 27 10:10:30 PST 2022: Unsuccessful try of deleting Expense Info
+5. Sun Nov 27 10:10:43 PST 2022: Unsuccessful adding the course: CPSC 210 102800900135
+6. Sun Nov 27 10:10:57 PST 2022: Removed course: CPSC 210 102800900135
+7. Sun Nov 27 10:11:05 PST 2022: Unsuccessful deleting the course: CPSC 210 102800900135
+
 # Phase 4: Task 3
 
 Reflection :there are many places in the project I can refactor so that the design can be proved. 
