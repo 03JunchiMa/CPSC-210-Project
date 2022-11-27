@@ -49,3 +49,21 @@ try to interact with different things and see how the tree grows.
 - You can also delete the entry that you added in the expense page or course page by right click (there will be the deletion pop up menu)
 - You can change the appearance of the application by selecting different look and feel in the setting menu
 - You can generate the valid timetable by clicking on the button "Generate valid timetables" in the timetable page after you adding the course
+
+# Phase 4: Task 3
+
+Reflection :there are many places in the project I can refactor so that the design can be proved. 
+
+1. Notice that "TimeTableUpperLeftPanel" is the associated with the type "CourseTable" and the type "Timetable". However,
+the type "CourseTable" is also associated with the type "Timetable". Here, the Coupling is very strong, we could make only
+the "CourseTable" to have the "TimeTable" field, and set up the "getTimeTable()" method in the "CourseTable" so that the Coupling is reduced.
+2. I believe the overall Cohesion is strong, every class is doing its own specified job. However, there are some method, such as "getTime()" and 
+"toTimeString()" inside the "CourseTable" class which can be moved to the "TimeTableAlgorithms" class, so that "CourseTable" can have strong Cohesion.
+3. Also, in the "MainFrame" class located in the ui package, the "MainFrame" is doing the job for setting up the listener for the TopMenuBar,
+which is clearly not MainFrame's job, which need to be refactored into the TopMenuBar so that the Cohesion can be improved.
+4. Also notice that all the three class "ExpenseMainPanel", "TimeTablePanel", "MainFrame" is associated with the "TreeApp", however, the MainFrame also contains the 
+field of the type "ExpenseMainPanel" and "TimeTablePanel", so we could only make the "MainFrame" associated with the "TreeApp" to reduce the coupling, and pass the "TreeApp" field in the constructor.
+5. Observer pattern can be applied to the "CourseTable" and the "ExpenseTable" with corresponding panel, so that all the different components can get the 
+message of the adding the deleting row operation. 
+6. I applied the Singleton pattern to the "TopMenuBar", because we only want one TopMenuBar instance to exit and all the class can have access to the same TopMenuBar.
+7. In the "CancelButton" class, in the add listener method, there are many similar operations when setting the color, this is low cohesion, we could pull the similar operation out so that it's easy to modify it.
