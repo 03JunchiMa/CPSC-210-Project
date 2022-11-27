@@ -55,7 +55,7 @@ public class ExpenseRecordingTest {
     }
 
     @Test
-    void testEventDelete() {
+    void testEventDelete() throws InterruptedException {
         Expense expense = new Expense(-13,"food");
         expenseRecording.addExpenseInfo(expense);
         expenseRecording.deleteExpenseInfo(2);
@@ -66,7 +66,9 @@ public class ExpenseRecordingTest {
         iterator.next();
 
         Event event1 = iterator.next();
+        Thread.sleep(1);
         Event event2 = iterator.next();
+
         Event event3 = null;
         int a = 1;
 

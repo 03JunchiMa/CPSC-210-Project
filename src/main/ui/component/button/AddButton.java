@@ -12,5 +12,4 @@ public class AddButton extends JButton {
         this.setForeground(new Color(221,134,15));
     }
 
-
 }

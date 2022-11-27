@@ -16,7 +16,6 @@ import java.util.Random;
 // Class Reference: https://study.163.com/course/courseLearn.htm?courseId=1209013812#/learn/video?lessonId=1278565112&courseId=1209013812
 public class PieChart extends JPanel {
 
-    private ExpenseRecording expenseRecording;
     private List<Part> partList = new ArrayList<>();
     private PartClickedListener partClickedListener;
 

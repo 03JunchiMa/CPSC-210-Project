@@ -15,7 +15,6 @@ import java.util.Vector;
 
 public abstract class DataTable extends JTable {
 
-    private JButton addButton;
     protected JPopupMenu popupMenu;
     protected JMenuItem item;
     protected DefaultTableModel model = new DefaultTableModel();

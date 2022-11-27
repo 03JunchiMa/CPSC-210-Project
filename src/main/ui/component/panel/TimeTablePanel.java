@@ -22,7 +22,6 @@ public class TimeTablePanel extends JPanel {
     private JPanel upperRightPanel;
     private JPanel lowerLeftPanel;
     private JPanel lowerRightPanel;
-    private AddButton upperLeftButton;
 
     // EFFECTS: initialize the timetable panel
     public TimeTablePanel(TreeApp treeApp, MainFrame mainFrame) {
