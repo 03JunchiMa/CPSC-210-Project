@@ -28,6 +28,7 @@ public class TimeTableAlgorithmsTest {
         timeTable.addIntendedCourse(new Course("CPSC 310 102",1500,1600,24));
         timeTable.addIntendedCourse(new Course("CPSC 310 102",1400,1500,24));
         timeTable.addIntendedCourse(new Course("CPSC 410 102",1500,1600,24));
+        timeTable.addIntendedCourse(new Course("CPSC 410 102",1500,1600,24));
         assertEquals(4, timeTable.getTimetable().size());
         ArrayList<ArrayList<Course>> validTimeTable = getValidTimeTable(timeTable.getTimetable(),0);
         assertEquals(0,validTimeTable.size());
